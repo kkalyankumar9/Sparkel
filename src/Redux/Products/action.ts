@@ -1,4 +1,4 @@
-import { DispatchType, ProductDatatype } from "../../ProductType";
+import { DispatchType, ProductDatatype } from "./ProductType";
 import { GET_PRODUCTS_FAIL, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS } from "./actionType";
 
 
@@ -29,11 +29,11 @@ export interface   IGetProductSuccess{
     return { type:GET_PRODUCTS_SUCCESS,payload:products};
   };
 
-  const getProducts=()=async(dispatch:DispatchType)=>{
-try {
+//   const getProducts=()=async(dispatch:DispatchType)=>{
+// try {
     
-} catch (error) {
+// } catch (error) {
     
-}
-  }
+// }
+//   }
   

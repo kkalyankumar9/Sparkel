@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
+import { ProductDatatype } from "./ProductType";
 
-import { ProductDatatype } from "../../type";
+
 
 let URL = "https://gold-gorgeous-ostrich.cyclic.app/";
 

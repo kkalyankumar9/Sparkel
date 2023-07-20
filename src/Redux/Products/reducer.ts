@@ -1,4 +1,5 @@
-import { ProductDatatype } from "../../ProductType"
+
+import { ProductDatatype } from "./ProductType";
 import { AppAction } from "./action";
 import { GET_PRODUCTS_FAIL, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS } from "./actionType";
 
