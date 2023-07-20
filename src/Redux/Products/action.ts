@@ -1,5 +1,7 @@
+import { AppDispatch } from "../store";
 import { DispatchType, ProductDatatype } from "./ProductType";
 import { GET_PRODUCTS_FAIL, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS } from "./actionType";
+import { getProductsAPI } from "./api";
 
 
 export type AppAction =
@@ -32,8 +34,24 @@ export interface   IGetProductSuccess{
 //   const getProducts=()=async(dispatch:DispatchType)=>{
 // try {
     
-// } catch (error) {
+// } catch (error)
+ //{
     
 // }
 //   }
-  
+export const getProducts =
+(getProductsParam?: {
+  params: { category: string[]; gender?: string[]; order?: string };
+}): any =>
+async (dispatch: AppDispatch) => {
+  dispatch(productRequest());
+  try {
+    let data = await getProductsAPI(getProductsParam);
+    if (data) {
+      dispatch(GetProductSuccess(data));
+      console.log(data)
+    }
+  } catch (e) {
+    dispatch(ProductError());
+  }
+};
