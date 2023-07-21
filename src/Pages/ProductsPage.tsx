@@ -35,6 +35,21 @@ const Div=styled.div`
   width: 70%;
   gap: 3px;
   padding: 3px;
+  @media (max-width: 766px) {
+    grid-template-columns: repeat(1,1fr);
+  }
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(2,1fr);
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  @media (min-width: 992px) and (max-width: 1199px) {
+    /* Styles for laptop devices */
+    grid-template-columns: repeat(4,1fr);
+  }
+
 
 `
 const Div1 = styled.div`
@@ -61,7 +76,7 @@ const Div1 = styled.div`
   }
 
   button {
-    background-color: #007bff;
+    background-color: #f5c904;
     color: #fff;
     border: none;
     padding: 8px 16px;
@@ -70,7 +85,7 @@ const Div1 = styled.div`
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: #0056b3;
+      background-color:#007bff ;
     }
   }
 
