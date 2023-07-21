@@ -1,9 +1,17 @@
-.slide {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
 
-/* Optional: Add a hover effect to pause the slideshow on hover */
-.banner-slider-container:hover .slide {
-  transition: none;
-}
+import { applyMiddleware, legacy_createStore,combineReducers } from "redux";
+import thunk from "redux-thunk";
+ import { reducer as ProductReducer} from "./Products/reducer";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+
+const rootReducer=combineReducers({ProductReducer})
+let middleware = [thunk];
+export const store= legacy_createStore(rootReducer,applyMiddleware(...middleware))
+
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
