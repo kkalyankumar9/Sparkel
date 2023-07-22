@@ -1,6 +1,7 @@
 // import axios from "axios";
 
 // import { NewDataType } from "../../Pages/AdminPages";
+export const someVariable = 42;
 
 // export const addProduct = (newData:NewDataType) => {
 // axios.post(`https://sparkel.onrender.com/data`,newData).then((res)=>{

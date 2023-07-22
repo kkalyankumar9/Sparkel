@@ -20,7 +20,7 @@ import { HashLink as Link } from "react-router-hash-link";
 
 import { SearchIcon } from "@chakra-ui/icons"
 import { useContext } from "react";
-import {AuthContext} from "../context/Authcontext";
+import { AuthContext } from "../context/Authcontext";
 
 const Navbar = () => {
   const myStyle = {
@@ -95,7 +95,7 @@ const Navbar = () => {
         <Link to="/#">
           <Image
             bgColor="white"
-            src="https://i.ibb.co/6ZTK02S/Final-logo.png"
+            src="https://i.ibb.co/6ZTK02S/Final-logo.png "
             width="100px"></Image>
         </Link>
       </Box>
