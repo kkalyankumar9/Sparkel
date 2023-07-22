@@ -19,3 +19,5 @@ export const someVariable = 42;
 //       throw new Error(`Failed to delete product: ${error}`);
 //     }
 //   };
+export{}
+
