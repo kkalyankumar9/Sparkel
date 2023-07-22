@@ -1,14 +1,14 @@
 import React from 'react';
-
 import './App.css';
-import { ProductsPage } from './Pages/ProductsPage';
+import {MainRoutes} from "./Pages/MainRoutes"
 
-import Home from './Pages/HomePage';
+
 
 function App() {
   return (
     <div className="App">
-
+  {/* <Home/> */}
+  <MainRoutes/>
     </div>
   );
 }

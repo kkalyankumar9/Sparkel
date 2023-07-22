@@ -1,7 +1,7 @@
 import React from 'react'
 import BannerSlider from '../Components/BannerSlider'
 import Footer from "../Components/Footer"
-// import Navbar from '../Components/Navbar'
+import Navbar from '../Components/Navbar'
 import { Box, Flex, Image, SimpleGrid, Text, Heading } from "@chakra-ui/react"
 import { useEffect } from "react";
 
@@ -133,7 +133,7 @@ const Home = () => {
   }, [section])
   return (
     <div style={{ width: "100%" }}>
-      {/* <Navbar /> */}
+      <Navbar />
       <div style={{ width: "100%" }}>
         <BannerSlider />
       </div>
@@ -142,25 +142,29 @@ const Home = () => {
       id="about-us"
       fontWeight="bold"
       borderRadius="40px"
-      paddingTop="8%"
+      paddingTop="10px"
       paddingLeft="2%"
       backgroundSize="100%"
       height={["200px", "300px", "350px", "400px"]}
       backgroundImage="https://images.pexels.com/photos/7232493/pexels-photo-7232493.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
       width="95%"
-      margin="auto"
-      marginBottom="30px"
-      padding={"20px"}
+      marginTop="30px"
+      marginBottom="20px"
+      marginLeft="20px"
+      border="2px solid red"
+      paddingBottom="20px"
+      
     >
       <Flex alignItems="center" justifyContent="space-between">
         {/* 1st Box - About */}
         <Box
-          width={["100%", "50%"]} // Adjust the width to control text size
-          padding={["20px", "40px"]} // Adjust padding as needed
+          width="50%" // Adjust the width to control text size
+          border="1px solid black"
           backgroundColor="transparent" // Optional background color for better readability
+          
         >
           <Heading marginBottom="20px" fontStyle="italic" fontFamily="cursive" color="#1C96C5">About Us</Heading>
-          <Text fontSize={["12px", "16px", "17px", "20px"]} width="100%" fontStyle="italic" fontFamily="cursive" color="#1C96C5" >
+          <Text fontSize={["12px", "16px", "17px", "20px"]} width="95%" fontStyle="italic" fontFamily="cursive" color="#1C96C5" >
           Sparkle Fashion and Clothing caters to thoughtful shoppers who appreciate unique
             designs and top quality pieces you just can’t find anywhere else.
             We are constantly curating fresh new collections and looking for
@@ -172,13 +176,17 @@ const Home = () => {
 
         {/* 2nd Box - Image */}
         <Box
-          height={["200px", "300px", "350px", "400px"]}
+          height={"100%"}
           width={["100%", "50%"]} // Adjust the width to control image size
+          // marginBottom="40px"
+          // paddingBottom="10px"
+          // marginBottom="10px"
+          
         >
           <img
             src="https://images.pexels.com/photos/2598630/pexels-photo-2598630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt=""
-            style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "40px" }}
+            style={{ width: "80%", height: "100%", objectFit: "cover", borderRadius: "40px" }}
           />
         </Box>
       </Flex>
