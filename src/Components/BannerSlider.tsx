@@ -74,7 +74,7 @@ const BannerSlider: React.FC = () => {
     currentSlide + 1 >= products.length ? products.length - 1 : currentSlide;
 
   return (
-    <Box position="relative" w="full" maxW="97%" mx="auto">
+    <Box position="relative" w="full" maxW="97%" mx="auto" marginTop="20px">
       <Flex 
       w="full" overflow="hidden">
         {products.slice(firstIndex, lastIndex + 1).map((product, index) => (

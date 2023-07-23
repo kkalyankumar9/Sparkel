@@ -1,8 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ProductDatatype } from "./ProductType";
 
-
-
 let URL = "https://sparkel.onrender.com";
 
 export const getProductsAPI = async (getProductsParam?: {
