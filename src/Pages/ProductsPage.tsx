@@ -1,40 +1,328 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState, store } from '../Redux/store'
-import { getProducts } from '../Redux/Products/action'
-import { ProductDatatype } from '../Redux/Products/ProductType'
-import { styled } from 'styled-components'
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { getProducts } from "../Redux/Products/action";
+import { useAppDispatch, useAppSelector } from "../Redux/store";
+import ProductCardItems from "./ProductCardItems";
+import { styled } from "styled-components";
+import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 
-export const ProductsPage = () => {
-  const products:any=useSelector((store:RootState)=>store.ProductReducer.products)
-  const dispatch=useDispatch()
-  React.useEffect(()=>{
-dispatch(getProducts())
-  },[])
+function ProductsPage() {
+  const dispatch = useAppDispatch();
+  const { isLoading, isError, products } = useAppSelector(
+    (store) => store.ProductReducer
+  );
+
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(12); // Change this value as per your requirement
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
+  const [category, setCategory] = useState<string[]>([]);
+  const [gender, setGender] = useState<string[]>([]);
+
+  const handleSortChange = (value: "asc" | "desc") => {
+    setSortOrder(value);
+  };
+
+  const handleFilterChange = (type: "category" | "gender", value: string[]) => {
+    if (type === "category") {
+      setCategory(value);
+    } else if (type === "gender") {
+      setGender(value);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
+
+  // Apply filtering and sorting only on the products shown on the current page
+  const filteredAndSortedProducts = products
+    .filter((product) => {
+      if (category.length === 0 && gender.length === 0) {
+        return true; // No filters applied, so include all products
+      }
+      return (
+        (category.length === 0 || category.includes(product.category)) &&
+        (gender.length === 0 || gender.includes(product.gender))
+      );
+    })
+    .sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.price - b.price;
+      } else if (sortOrder === "desc") {
+        return b.price - a.price;
+      }
+      return 0;
+    });
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredAndSortedProducts.length / pageSize);
+  const paginatedProducts = filteredAndSortedProducts.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  );
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+  const handleClearSort = () => {
+    setSortOrder(null); // Clear the sort option by setting it to null
+  };
   return (
-    <Div>
-        {products?.map((e:ProductDatatype)=>(
-          <Div1 key={e.id} className='div1'>
-          
-          <img src={e.image} alt="" />
-          <p>{e.brand}</p>
-          <p>{e.title}</p>
-          <p>{e.gender}</p>
-          <p>{e.size}</p>
-          <p>{e.price}</p>
-          <button>View Move</button>
-          </Div1>
-        ))}
-
-    </Div>
-  )
+    <div>
+      <Navbar/>
+    
+    <div>
+      {isLoading ? (
+        <h2>Loading..</h2>
+      ) : isError ? (
+        <h2>Error..</h2>
+      ) : (
+        <>
+        <Div4>
+          <Div2>
+          <div style={{textAlign:"left"}}>
+            <label>
+             <h4> Sort By Price:</h4>
+            </label>
+            <div>
+              <input
+                type="radio"
+                value="asc"
+                checked={sortOrder === "asc"}
+                onChange={() => handleSortChange("asc")}
+              />
+              <span>Ascending</span>
+            </div>
+            <div>
+              <input
+                type="radio"
+                value="desc"
+                checked={sortOrder === "desc"}
+                onChange={() => handleSortChange("desc")}
+              />
+              <span>Descending</span>
+            </div>
+            <button onClick={handleClearSort}>Clear Sort</button>
+          </div>
+          <div style={{textAlign:"left"}}>
+            <label>
+             <h4> Filter By Category:</h4>
+              <div>
+                <input
+                  type="checkbox"
+                  value="top_ware"
+                  checked={category.includes("top_ware")}
+                  onChange={(e) => {
+                    handleFilterChange(
+                      "category",
+                      e.target.checked
+                        ? [...category, e.target.value]
+                        : category.filter((val) => val !== e.target.value)
+                    );
+                  }}
+                />
+                <span>Top ware</span>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  value="bottom_ware"
+                  checked={category.includes("bottom_ware")}
+                  onChange={(e) => {
+                    handleFilterChange(
+                      "category",
+                      e.target.checked
+                        ? [...category, e.target.value]
+                        : category.filter((val) => val !== e.target.value)
+                    );
+                  }}
+                />
+                <span>Bottom ware</span>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  value="shoes"
+                  checked={category.includes("shoes")}
+                  onChange={(e) => {
+                    handleFilterChange(
+                      "category",
+                      e.target.checked
+                        ? [...category, e.target.value]
+                        : category.filter((val) => val !== e.target.value)
+                    );
+                  }}
+                />
+                <span>Shoes</span>
+              </div>
+            </label>
+          </div>
+          <div style={{textAlign:"left"}}>
+            <label>
+             <h4> Filter By Gender:</h4>
+              <div >
+                <input
+                  type="checkbox"
+                  value="male"
+                  checked={gender.includes("male")}
+                  onChange={(e) => {
+                    handleFilterChange(
+                      "gender",
+                      e.target.checked
+                        ? [...gender, e.target.value]
+                        : gender.filter((val) => val !== e.target.value)
+                    );
+                  }}
+                />
+                <span>Male</span>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  value="women"
+                  checked={gender.includes("women")}
+                  onChange={(e) => {
+                    handleFilterChange(
+                      "gender",
+                      e.target.checked
+                        ? [...gender, e.target.value]
+                        : gender.filter((val) => val !== e.target.value)
+                    );
+                  }}
+                />
+                <span>Women</span>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  value="kids"
+                  checked={gender.includes("kids")}
+                  onChange={(e) => {
+                    handleFilterChange(
+                      "gender",
+                      e.target.checked
+                        ? [...gender, e.target.value]
+                        : gender.filter((val) => val !== e.target.value)
+                    );
+                  }}
+                />
+                <span>Kids</span>
+              </div>
+            </label>
+          </div>
+          </Div2>
+          <div>
+          <ProductList>
+            {paginatedProducts.map((product: any) => (
+              <ProductCardItems key={product.id} {...product} />
+            ))}
+          </ProductList>
+          </div>
+          {/* Pagination buttons */}
+          </Div4>
+        
+          <PaginationContainer  >
+            <button
+              onClick={handlePrevPage}
+              disabled={page === 1}
+              style={{ marginRight: "10px" }}
+            >
+              Previous Page
+            </button>
+            <span>
+              Page {page} of {totalPages}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={page === totalPages}
+              style={{ marginLeft: "10px" }}
+            >
+              Next Page
+            </button>
+          </PaginationContainer>
+     
+        
+        </>
+      )}
+    </div>
+    <br />
+    <Footer/>
+    </div>
+  );
 }
-const Div=styled.div`
+
+export default ProductsPage;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  justify-content: center;
+
+  button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+`;
+const Div4 = styled.div`
+display: flex;
+justify-content: space-between;
+padding: 2%;
+Div4>div>div{
+  align-items: center;
+  
+}
+
+`;
+
+const Div2 = styled.div`
+width: 25%;
+padding: 10px;
+`;
+
+// const ProductList = styled.div`
+// width: 80%;
+// display: flex;
+// flex-wrap: wrap;
+// justify-content: space-between;
+// `;
+
+
+
+
+
+
+const ProductList=styled.div`
   display: grid;
   grid-template-columns: repeat(4,1fr);
   width: 70%;
   gap: 3px;
   padding: 3px;
+ 
   @media (max-width: 766px) {
     grid-template-columns: repeat(1,1fr);
   }
@@ -52,44 +340,44 @@ const Div=styled.div`
 
 
 `
-const Div1 = styled.div`
-  padding: 10px;
-  margin: 10px auto;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  width: 240px;
-  position: relative;
-  overflow: hidden;
+// const Div1 = styled.div`
+//   padding: 10px;
+//   margin: 10px auto;
+//   border: 1px solid #ccc;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   background-color: #fff;
+//   width: 240px;
+//   position: relative;
+//   overflow: hidden;
 
-  img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-  }
+//   img {
+//     width: 100%;
+//     height: auto;
+//     border-radius: 8px;
+//     transition: transform 0.3s ease;
+//   }
 
-  p {
-    font-size: 14px;
-    margin: 8px 0;
-  }
+//   p {
+//     font-size: 14px;
+//     margin: 8px 0;
+//   }
 
-  button {
-    background-color: #f5c904;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+//   button {
+//     background-color: #f5c904;
+//     color: #fff;
+//     border: none;
+//     padding: 8px 16px;
+//     border-radius: 4px;
+//     cursor: pointer;
+//     transition: background-color 0.2s ease;
 
-    &:hover {
-      background-color:#007bff ;
-    }
-  }
+//     &:hover {
+//       background-color:#007bff ;
+//     }
+//   }
 
-  &:hover img {
-    transform: translateY(-10px);
-  }
-`;
+//   &:hover img {
+//     transform: translateY(-10px);
+//   }
+// `;
