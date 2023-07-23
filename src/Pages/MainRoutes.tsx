@@ -10,7 +10,7 @@ export const MainRoutes=()=>{
      <Route path="/" element={<Home/>}/>
      <Route path="/login" element={<LoginPage/>}/>
      <Route path="/Signup" element={<SignUp/>}/>
-
+     
      </Routes>
 
     )

@@ -22,6 +22,7 @@ const Login = () => {
     password: '',
   });
 
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setLoginForm((prevForm) => ({ ...prevForm, [name]: value }));
@@ -33,17 +34,12 @@ const Login = () => {
     .then((res)=>{
       console.log(res)
       navigate("/")
-      
       setIsAuthenticated(true)
-
     })
     .catch((error)=>{
       console.log(error)
     })
-
-  
   };
-
 
   const handleGoBack=()=>{
     navigate(-1)
@@ -71,7 +67,7 @@ const Login = () => {
         placeholder="Password"
         mb={4}
       />
-      <Button type="submit" bg="#FA6F13" color={"white"}>Login</Button>
+      <Button type="submit" bg="#143dc4" color={"white"} >Login</Button>
 
     </form>
     <br />

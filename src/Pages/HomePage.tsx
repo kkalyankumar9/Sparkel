@@ -142,24 +142,24 @@ const Home = () => {
       id="about-us"
       fontWeight="bold"
       borderRadius="40px"
-      paddingTop="10px"
+      paddingTop="30px"
       paddingLeft="2%"
       backgroundSize="100%"
       height={["200px", "300px", "350px", "400px"]}
       backgroundImage="https://images.pexels.com/photos/7232493/pexels-photo-7232493.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      width="95%"
-      marginTop="30px"
-      marginBottom="20px"
-      marginLeft="20px"
-      border="2px solid red"
-      paddingBottom="20px"
+      width="97%"
+      marginTop="20px"
+      marginBottom="25px"
+      marginLeft="25px"
+      // border="2px solid red"
+      
       
     >
-      <Flex alignItems="center" justifyContent="space-between">
+      <Flex alignItems="center" justifyContent="space-around">
         {/* 1st Box - About */}
         <Box
           width="50%" // Adjust the width to control text size
-          border="1px solid black"
+          // border="1px solid black"
           backgroundColor="transparent" // Optional background color for better readability
           
         >
@@ -179,14 +179,15 @@ const Home = () => {
           height={"100%"}
           width={["100%", "50%"]} // Adjust the width to control image size
           // marginBottom="40px"
-          // paddingBottom="10px"
+          // paddingBottom="40px"
           // marginBottom="10px"
-          
+          marginLeft="50px"
+          paddingRight="20px"
         >
           <img
             src="https://images.pexels.com/photos/2598630/pexels-photo-2598630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt=""
-            style={{ width: "80%", height: "100%", objectFit: "cover", borderRadius: "40px" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "40px" }}
           />
         </Box>
       </Flex>
@@ -194,17 +195,17 @@ const Home = () => {
       
 
       {/* Trending Style Video  */}
-       <Box width="95%" margin="auto" marginTop="50px">
+       <Box width="95%" margin="auto" marginTop="35px">
       <Flex>
         {/* Video Side */}
         <Box width="50%" height="350px" borderRadius="10px">
-          <video autoPlay muted width="100%" height="100%" controls>
+          <video autoPlay muted width="100%" height="100%" controls >
             <source src="https://cdn-useast1.kapwing.com/final_64ba3f80f79e27001f2959de_596771.mp4?GoogleAccessId=prod-sa-videoprocessing%40kapwing-prod.iam.gserviceaccount.com&Expires=1689956399&Signature=IEwclkAg35nVkpA%2F9aT7drJ397KEnn5wqBWhZFpOglqWpS%2F5qtfJf6Yq9xcamY04PIGYWjF%2FXEgFP36%2FmqVYBC3ytWmieqfY4sW7BkbcDTxqEUCetVmRYAnsp%2F3aBYQv4DTBeCGS%2F3JxhHVmc5hvocM0hp80HVuxK3AD5PqBEj4U3GAjf8uvjz8oYHyQgn8R1SmsKG9VQ2ZG2G4QP0tnk0bBaML2YuKNkWQMjOgPoUZ0837k7x5ib4g8uE52lTwixvQ1WTfCuu%2B7hSKksI70OUNXdzcbkY9Wto3HA5K2UrJJPJE0IcniEWV4haq%2F1Y%2BKWbKf81Kvwj0GFbaUzjfFhQ%3D%3D" type="video/mp4" />
           </video>
         </Box>
 
         {/* Text Side */}
-        <Box width="50%" height="200px" display="flex" alignItems="center" justifyContent="center" fontStyle="italic" fontFamily="cursive" fontSize="larger" color="#1C96C5" paddingTop="50px">
+        <Box width="50%"  display="flex" alignItems="center" justifyContent="center" fontStyle="italic" fontFamily="cursive" fontSize="35px" color="#1C96C5" >
           <h1>'Fashion is the armor to survive <br /> the reality of everyday life'. 
           <br />
             By —Bill Cunningham
@@ -217,7 +218,7 @@ const Home = () => {
     
 
 
-      <Box id='new-arrivals' width="95%" marginTop="60px" fontFamily='Poppins,sans-serif' letterSpacing="wide" fontWeight="bold" marginLeft="40px" color="#1C96C5">
+      <Box id='new-arrivals' width="95%" marginTop="80px" fontFamily='Poppins,sans-serif' letterSpacing="wide" fontWeight="bold" marginLeft="40px" color="#1C96C5">
         <Heading >2023 New Arrivals</Heading>
         <Flex marginTop="20px" marginBottom="30px">
           <SimpleGrid margin="auto" columns={[1,2,3,4]} gap="40px">
