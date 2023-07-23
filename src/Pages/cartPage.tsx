@@ -157,7 +157,6 @@ const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
                 </Table>
                 </TableContainer>
 
-       
            
                     </Box>
                 <Box  w={{ base: "100%", md: "25%" }}>
