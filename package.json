@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
     "react-icons": "^4.10.1",
+
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.2",
     "react-router-hash-link": "^2.4.3",
@@ -59,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-infinite-scroll-component": "^5.0.0",
     "@types/react-router-hash-link": "^2.4.6"
   }
 }
