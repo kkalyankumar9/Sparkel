@@ -1,6 +1,7 @@
 import axios from "axios";
 
 // import { NewDataType } from "../../Pages/AdminPages";
+export const someVariable = 42;
 
 // export const addProduct = (newData: NewDataType) => {
 //   axios
@@ -12,6 +13,7 @@ import axios from "axios";
 //       console.log(err);
 //     });
 // };
+
 
 export const deleteProduct = async (id: number) => {
   try {

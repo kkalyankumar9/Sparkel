@@ -1,10 +1,15 @@
-import React from "react";
 
-import "./App.css";
-import AdminProduct from "./Pages/AdminProduct";
+import React from 'react';
+import './App.css';
+import {MainRoutes} from "./Pages/MainRoutes"
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+  {/* <Home/> */}
+  <MainRoutes/>
+    </div>
+  );
 }
 
 export default App;
