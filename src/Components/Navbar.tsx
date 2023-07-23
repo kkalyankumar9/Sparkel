@@ -12,12 +12,10 @@ import {
   Flex,
   Center,
   Button
-
 } from "@chakra-ui/react";
 import { VscAccount } from "react-icons/vsc";
 import { GrCart } from "react-icons/gr";
 import { HashLink as Link } from "react-router-hash-link";
-
 import { SearchIcon } from "@chakra-ui/icons"
 import { useContext } from "react";
 import { AuthContext } from "../context/Authcontext";
@@ -110,6 +108,8 @@ const Navbar = () => {
           "45%",
           "40%", // 62em+
         ]}>
+
+          
         <Link style={myStyle} to="/#">
           Home
         </Link>
@@ -167,16 +167,16 @@ const Navbar = () => {
         ]}>
 
 
-           { !isAuthenticated?<Link to="/login" >
+{ !isAuthenticated?<Link to="/login" >
 
-          <Center fontSize="15px" flexDirection="column" cursor="pointer">
-            <VscAccount size="28px" />
-            <Text marginTop="5px">Login</Text>
-          </Center>
+<Center fontSize="15px" flexDirection="column" cursor="pointer">
+  <VscAccount size="28px" />
+  <Text marginTop="5px">Login</Text>
+</Center>
 
-        </Link>:  <Button onClick={handleLogout} disabled={!isAuthenticated}  bg={"white"}>
-      Logout
-    </Button>}
+</Link>:  <Button onClick={handleLogout} disabled={!isAuthenticated}  bg={"white"}>
+Logout
+</Button>}
 
         <Link to="/cart">
           <Center fontSize="15px" flexDirection="column" cursor="pointer">
