@@ -14,7 +14,6 @@ export const MainRoutes=()=>{
      <Route path="/Signup" element={<SignUp/>}/>
      <Route path="/cart" element={<CartPage/>}/>
      <Route path="/checkout" element={<CheckoutPage/>}/>
-
      </Routes>
 
     )
