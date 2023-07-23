@@ -96,7 +96,7 @@ const Navigate=useNavigate()
 
 const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();
-  Navigate(`/checkoutpage`)
+  Navigate(`/Checkout`)
 
 };
 
