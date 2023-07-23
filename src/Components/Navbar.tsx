@@ -89,12 +89,12 @@ const Navbar = () => {
           </MenuList>
         </Menu>
       </Box>
-      <Box width={["40%", "20%", "10%", "6%"]}>
+      <Box width={["42%", "21%", "11%", "8%"]}>
         <Link to="/#">
           <Image
             bgColor="white"
             src="https://i.ibb.co/6ZTK02S/Final-logo.png "
-            width="100px"></Image>
+            width="110px"></Image>
         </Link>
       </Box>
       <Box
