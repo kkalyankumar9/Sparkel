@@ -1,23 +1,27 @@
-// import axios from "axios";
+import axios from "axios";
 
 // import { NewDataType } from "../../Pages/AdminPages";
 export const someVariable = 42;
 
-// export const addProduct = (newData:NewDataType) => {
-// axios.post(`https://sparkel.onrender.com/data`,newData).then((res)=>{
-//     return(res.data)
-//    }).catch((err)=>{
-//     console.log(err)
-//    })
+// export const addProduct = (newData: NewDataType) => {
+//   axios
+//     .post(`https://sparkel.onrender.com/data`, newData)
+//     .then((res) => {
+//       return res.data;
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
 // };
 
-// export const deleteProduct = async (id: number) => {
-//     try {
-//       const response = await axios.delete(`https://sparkel.onrender.com/data/${id}`);
-//       return response.data;
-//     } catch (error) {
-//       throw new Error(`Failed to delete product: ${error}`);
-//     }
-//   };
-export{}
 
+export const deleteProduct = async (id: number) => {
+  try {
+    const response = await axios.delete(
+      `https://sparkel.onrender.com/data/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to delete product: ${error}`);
+  }
+};
