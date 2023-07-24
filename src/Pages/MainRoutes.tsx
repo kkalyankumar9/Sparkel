@@ -32,9 +32,7 @@ export const MainRoutes = () => {
       <Route path="/checkout" element={<CheckoutPage />} />
 
       <Route path="/adminlogin" element={<AdminLoginPage />} />
-
       <Route path="/admin" element={<PrivateRoute></PrivateRoute>} />
-
       <Route
         path="/admin-addproducts"
         element={
