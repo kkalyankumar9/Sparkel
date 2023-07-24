@@ -1,5 +1,5 @@
 # Sparkel
-Shop-now is a full-stack web application that provides a platform for E-commerce, allowing users to discover and purchase fashionable clothing items.
+ Sparkel is a full-stack web application that provides a platform for E-commerce, allowing users to discover and purchase fashionable clothing items.
 
 -![image](https://github.com/kkalyankumar9/loud-weight-1875/assets/112814583/cc0a8796-ba69-40d0-8eeb-b245dd61e749)
 
