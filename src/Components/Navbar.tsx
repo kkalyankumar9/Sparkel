@@ -75,7 +75,7 @@ const Navbar = () => {
             <MenuItem as="a" href="#about-us">
               About
             </MenuItem>
-            <MenuItem as="a" href="products">
+            <MenuItem as="a" href="/data">
               products
             </MenuItem>
             <MenuItem as="a" href="/cart">
