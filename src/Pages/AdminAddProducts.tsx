@@ -79,7 +79,7 @@ const AdminAddProducts = () => {
   } = newProduct;
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Box
         w="35%"
         m="3rem auto"

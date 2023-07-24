@@ -42,7 +42,11 @@ const AdminLoginRight = () => {
             duration: 3000,
             isClosable: true,
           });
-          setTimeout(() => navigator("/admin-addproducts"), 3000);
+
+//           setTimeout(() => navigator("/admin-addproducts"), 3000);
+
+          setTimeout(() => navigator("/admin"), 3000);
+
         } else {
           toast({
             position: "top",

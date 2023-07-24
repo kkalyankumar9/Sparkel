@@ -110,13 +110,13 @@ const Navbar = () => {
         ]}>
 
           
-        <Link style={myStyle} to="/#">
+        <Link style={myStyle} to="/">
           Home
         </Link>
         <Link style={myStyle} to="/#about-us" smooth>
           About
         </Link>
-        <Link style={myStyle} to="/products">
+        <Link style={myStyle} to="/data">
           products
         </Link>
         <Link style={myStyle} to="/#new-arrivals" smooth>
