@@ -16,7 +16,7 @@ export const getAdminProudcts =
     dispatch({ type: ADMIN_GET_PRODUCT_LOADING });
     try {
       axios
-        .get(`https://shop-now-api-pz3r.onrender.com/data`, queriesObject)
+        .get(`https://sparkel.onrender.com/data`, queriesObject)
         .then((req) => {
           dispatch({
             type: ADMIN_GET_PRODUCT_SUCCESS,
@@ -30,7 +30,7 @@ export const getAdminProudcts =
   };
 
 export const deleteAdminProduct = (id: number) => {
-  return axios.delete(`https://shop-now-api-pz3r.onrender.com/data/${id}`);
+  return axios.delete(`https://sparkel.onrender.com/data/${id}`);
 };
 
 export const adminLogin = (dispatch: Dispatch) => () => {
