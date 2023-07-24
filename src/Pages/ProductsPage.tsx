@@ -14,7 +14,7 @@ function ProductsPage() {
   );
 
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(10); // Change this value as per your requirement
+  const [pageSize] = useState(8); // Change this value as per your requirement
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
   const [category, setCategory] = useState<string[]>([]);
   const [gender, setGender] = useState<string[]>([]);
