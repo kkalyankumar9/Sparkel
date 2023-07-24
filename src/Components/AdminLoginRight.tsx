@@ -10,14 +10,13 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, FormEvent } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-// import { AdminInput } from 'src/types/typeForAdmin';
+
 import { AdminInput } from "../types/typeForAdmin";
-// import { userLoginAuth } from 'src/api/api';
+
 import { userLoginAuth } from "../api/api";
 import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
 import { adminLogin } from "../Redux/AdminReducer/action";
-// import { adminLogin } from 'src/redux/AdminProductReducer/actions';
 
 const AdminLoginRight = () => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -31,9 +30,9 @@ const AdminLoginRight = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    userLoginAuth(adminInfo.email)
+    userLoginAuth(adminInfo.email && adminInfo.password)
       .then((req) => {
-        if (req.data.id === email && req.data.password === password) {
+        if (req.data.email === email && req.data.password === password) {
           localStorage.setItem("currentUser", req.data.name);
           dispatch(adminLogin(dispatch));
           toast({
@@ -43,7 +42,7 @@ const AdminLoginRight = () => {
             duration: 3000,
             isClosable: true,
           });
-          setTimeout(() => navigator("/admin-products"), 3000);
+          setTimeout(() => navigator("/admin-addproducts"), 3000);
         } else {
           toast({
             position: "top",
@@ -79,6 +78,7 @@ const AdminLoginRight = () => {
             <FormControl isRequired>
               <Input
                 type="email"
+                // name="email"
                 placeholder="Enter Your Email"
                 autoComplete="off"
                 required
@@ -92,6 +92,7 @@ const AdminLoginRight = () => {
             <FormControl isRequired>
               <Input
                 type="password"
+                // name="password"
                 placeholder="Enter Your Password"
                 autoComplete="off"
                 border="2px solid #282828"
