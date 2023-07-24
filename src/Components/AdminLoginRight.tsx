@@ -30,9 +30,9 @@ const AdminLoginRight = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    userLoginAuth(adminInfo.email && adminInfo.password)
+    userLoginAuth(adminInfo.email)
       .then((req) => {
-        if (req.data.email === email && req.data.password === password) {
+        if (req.data.id === email && req.data.password === password) {
           localStorage.setItem("currentUser", req.data.name);
           dispatch(adminLogin(dispatch));
           toast({
@@ -42,7 +42,8 @@ const AdminLoginRight = () => {
             duration: 3000,
             isClosable: true,
           });
-          setTimeout(() => navigator("/admin-addproducts"), 3000);
+          setTimeout(() => navigator("/admin"), 3000);
+          //   setTimeout(() => navigator("/admin-addproducts"), 3000);
         } else {
           toast({
             position: "top",
