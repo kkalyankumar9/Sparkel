@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+
 import { getProducts } from "../Redux/Products/action";
 import { useAppDispatch, useAppSelector } from "../Redux/store";
 import ProductCardItems from "./ProductCardItems";
@@ -14,7 +14,7 @@ function ProductsPage() {
   );
 
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(12); // Change this value as per your requirement
+  const [pageSize] = useState(8); // Change this value as per your requirement
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
   const [category, setCategory] = useState<string[]>([]);
   const [gender, setGender] = useState<string[]>([]);
@@ -318,8 +318,8 @@ padding: 10px;
 
 const ProductList=styled.div`
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  width: 70%;
+  grid-template-columns: repeat(5,1fr);
+  width: 60%;
   gap: 3px;
   padding: 3px;
  
