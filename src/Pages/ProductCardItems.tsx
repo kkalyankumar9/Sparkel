@@ -149,6 +149,7 @@ interface ProductDatatype {
   isNew?: boolean;
 }
 
+
 const ProductCardItems: React.FC<ProductDatatype> = ({
   ratings,
   reviews,
@@ -167,11 +168,11 @@ const ProductCardItems: React.FC<ProductDatatype> = ({
   const [isInCart, setIsInCart] = useState(false);
 
   const handleAddToCart = () => {
-    const cartItems: ProductDatatype[] = JSON.parse(localStorage.getItem("cart") || "[]");
+    const cartItems: ProductDatatype[] = JSON.parse(localStorage.getItem('cart') || '[]');
     const isProductInCart = cartItems.some((item) => item.id === id);
 
     if (isProductInCart) {
-      alert("Product is already in the cart. Not adding duplicate.");
+      alert('Product is already in the cart. Not adding a duplicate.');
       return;
     }
 
@@ -190,35 +191,46 @@ const ProductCardItems: React.FC<ProductDatatype> = ({
       gender,
     };
 
-    axios.post("https://sparkel.onrender.com/cart", productData)
+    axios
+      .post('https://sparkel2.onrender.com/cart', productData)
       .then((response) => {
-        console.log("Product added to cart:", response.data);
-        alert("Product added to cart")
+        console.log('Product added to cart:', response.data);
+        alert('Product added to cart');
         setIsInCart(true);
         cartItems.push(productData);
-        localStorage.setItem("cart", JSON.stringify(cartItems));
+        localStorage.setItem('cart', JSON.stringify(cartItems));
       })
       .catch((error) => {
-       // console.error("Error adding product to cart:", error);
+        console.error('Error adding product to cart:', error);
       });
   };
 
   return (
-   
     <CardContainer>
       {isNew && <NewBadge>New</NewBadge>}
       <Image src={image} alt={`Picture of ${title}`} />
-      <div style={{ padding: "16px" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ padding: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           {isNew && <span>New</span>}
           {assured && (
-            <div title="Assured" style={{ display: "flex", alignItems: "center", paddingLeft: "8px" }}>
-              <MdGppGood style={{ height: "28px", width: "28px" }} />
+            <div title="Assured" style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px' }}>
+              <MdGppGood style={{ height: '28px', width: '28px' }} />
             </div>
           )}
         </div>
         <Title>{brand}</Title>
-        <h4 style={{ fontSize: "lg", fontWeight: "semibold", color: "#718096", lineHeight: "tight", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginTop: "4px" }}>
+        <h4
+          style={{
+            fontSize: '1.2rem', // Use '1.2rem' instead of 'lg'
+            fontWeight: 'bold', // Use 'bold' instead of 'semibold'
+            color: '#718096',
+            lineHeight: '1.5',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            marginTop: '4px',
+          }}
+        >
           {title}
         </h4>
         {/* <StarRating rating={ratings} numReviews={reviews} /> */}
@@ -232,19 +244,16 @@ const ProductCardItems: React.FC<ProductDatatype> = ({
           <SizeValue>{size}</SizeValue>
         </SizeInfo>
       </div>
-     
+
       {/* <Link to={`/data/${id}`}>
-          <Button>View Details</Button>
-        </Link> */}
-        <Spacer/>
-        <Button onClick={handleAddToCart} disabled={isInCart}>
-        {isInCart ? "Added to Cart" : "Add to Cart"}
+        <Button>View Details</Button>
+      </Link> */}
+      <Spacer />
+      <Button onClick={handleAddToCart} disabled={isInCart}>
+        {isInCart ? 'Added to Cart' : 'Add to Cart'}
       </Button>
     </CardContainer>
-
   );
 };
 
 export default ProductCardItems;
-
- 

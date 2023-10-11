@@ -30,7 +30,7 @@ export const getAdminProudcts =
   };
 
 export const deleteAdminProduct = (id: number) => {
-  return axios.delete(`https://sparkel.onrender.com/data/${id}`);
+  return axios.delete(`https://sparkel2.onrender.com/data/${id}`);
 };
 
 export const adminLogin = (dispatch: Dispatch) => () => {
