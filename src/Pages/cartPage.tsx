@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
 import { useEffect, useState } from "react";
+import { DeleteIcon } from "@chakra-ui/icons";
 interface CartItem {
     id: number;
     image:string;
@@ -162,7 +163,7 @@ const handleDelete = (id: number) => {
                         String(e.price*quantity[i])
                     }
                 </Td>
-                <Td><Button onClick={()=>handleDelete(e.id)}>Del</Button></Td>
+                <Td><Button onClick={()=>handleDelete(e.id)}><DeleteIcon/></Button></Td>
                 
                     
                     
