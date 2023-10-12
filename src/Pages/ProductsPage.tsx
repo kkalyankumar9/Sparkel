@@ -102,8 +102,8 @@ function ProductsPage() {
         <Div4>
           <Div2>
           <div style={{textAlign:"left"}}>
-            <label>
-             <h4> Sort By Price:</h4>
+            <label style={{marginBottom:"10px",fontSize:"large"}} >
+             <h4 > Sort By Price:</h4>
             </label>
             <div>
               <input
@@ -126,7 +126,7 @@ function ProductsPage() {
             <button onClick={handleClearSort}>Clear Sort</button>
           </div>
           <div style={{textAlign:"left"}}>
-            <label>
+            <label  style={{marginBottom:"10px",fontSize:"large"}}>
              <h4> Filter By Category:</h4>
               <div>
                 <input
@@ -179,7 +179,7 @@ function ProductsPage() {
             </label>
           </div>
           <div style={{textAlign:"left"}}>
-            <label>
+            <label  style={{marginBottom:"10px",fontSize:"large"}}>
              <h4> Filter By Gender:</h4>
               <div >
                 <input
@@ -314,6 +314,8 @@ Div4>div>div{
 const Div2 = styled.div`
 width: 25%;
 padding: 10px;
+
+
 `;
 
 // const ProductList = styled.div`
