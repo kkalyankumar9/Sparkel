@@ -42,6 +42,9 @@ const Navbar = () => {
         md: "14%", // 48em-80em,
         xl: "13%", // 80em+
       }}
+    boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
+    position={"sticky"}
+    zIndex={"0px"}
       style={{
         padding: "10px 0px 10px 0px",
         zIndex: "100",
@@ -94,7 +97,7 @@ const Navbar = () => {
           <Image
             bgColor="white"
             src="https://i.ibb.co/6ZTK02S/Final-logo.png "
-            width="110px"></Image>
+            width="90px"></Image>
         </Link>
       </Box>
       <Box

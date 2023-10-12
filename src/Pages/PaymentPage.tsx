@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const theme = extendTheme({
   colors: {
@@ -65,7 +66,19 @@ function PaymentPage() {
     navigate(-1)
   }
   const [value, setValue] = React.useState('1')
- 
+  const handleOrder =async () => {
+    try {
+      await axios.delete("https://sparkel2.onrender.com"); // Replace with your actual URL
+  
+      console.log("All data deleted successfully.");
+  
+      // For example: setcartData([]) or dispatch an action to clear it
+  
+    } catch (error) {
+      console.error("Error deleting all data:", error);
+      // Handle the error, show an error message, or take other actions
+    }
+  };
   return (
     <ChakraProvider theme={theme}>
       <Box>
@@ -125,7 +138,7 @@ function PaymentPage() {
           <br />
         
 
-          <Button type="submit" colorScheme="primary"  w={"200px"}>Pay</Button>
+          <Button type="submit" colorScheme="primary"  w={"200px"} onClick={handleOrder}>Pay</Button>
         </form>
         <Box w="100px">
         <button onClick={handleGoBack} > <br /><ArrowBackIcon marginRight={"10px"}/>Back</button>

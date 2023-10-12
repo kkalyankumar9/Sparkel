@@ -1,6 +1,6 @@
-import { Box, Button, Flex, Heading, Link, Stack, StackDivider, Table, TableContainer, Tbody, Th, Thead, Tr } from "@chakra-ui/react"
+import { Box, Button,  Flex,  Heading, Link, Stack, StackDivider, Table, TableContainer, Tbody, Th, Thead, Tr } from "@chakra-ui/react"
 import axios from "axios"
-import { useEffect, useState } from "react"
+
 
 import { Card, CardHeader, CardBody, CardFooter, Text,Td,Image} from '@chakra-ui/react'
 
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
+import { useEffect, useState } from "react";
 interface CartItem {
     id: number;
     image:string;
@@ -29,7 +30,7 @@ const CartPage=()=>{
 
    async function cartdata(){
     try {
-        await axios.get("https://sparkel.onrender.com/cart")
+        await axios.get("https://sparkel2.onrender.com/cart")
         .then(res=>{
             setcartData(res.data)
             setQuantity(Array(res.data.length).fill(1));
@@ -99,14 +100,29 @@ const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
   Navigate(`/Checkout`)
 
 };
+const handleDelete = (id: number) => {
+  // Find the index of the item to be deleted
+  //const itemIndex = cartData.findIndex((item) => item.id === id);
 
+  
+
+  // Send a request to your server to update the cart data
+  axios.delete(`https://sparkel2.onrender.com/cart/${id}`)
+    .then((response) => {
+      console.log("Item deleted successfully");
+      alert("deleted")
+      cartdata()
+      
+    })
+    .catch((error) => {
+      console.error("Error deleting item: ", error);
+    });
+};
     return <>
    <Navbar/>
     <Box p={"2%"} >
         <Heading>Your Shoping Cart</Heading>
-        <Flex flexDirection={{ base: "column", md: "row" }}
-   
-       >
+        <Flex flexDirection={{ base: "column", md: "row" }}>
                     <Box   w={{ base: "100%", md: "70%" }} >
                     <TableContainer >
                         {cartData.length===0?"EMPTY":""}
@@ -135,6 +151,7 @@ const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
                    </Td>
                     <Td>{e.brand}</Td>
                     <Td>{e.price}</Td>
+
                     <Td>
                     <Button onClick={() => handleDecrement(i)}>-</Button>
                 {quantity[i]}
@@ -145,6 +162,7 @@ const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
                         String(e.price*quantity[i])
                     }
                 </Td>
+                <Td><Button onClick={()=>handleDelete(e.id)}>Del</Button></Td>
                 
                     
                     

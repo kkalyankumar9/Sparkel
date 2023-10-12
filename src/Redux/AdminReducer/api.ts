@@ -5,7 +5,7 @@ export const someVariable = 42;
 
 // export const addProduct = (newData: NewDataType) => {
 //   axios
-//     .post(`https://sparkel.onrender.com/data`, newData)
+//     .post(`https://sparkel2.onrender.com/data`, newData)
 //     .then((res) => {
 //       return res.data;
 //     })
@@ -18,7 +18,7 @@ export const someVariable = 42;
 export const deleteProduct = async (id: number) => {
   try {
     const response = await axios.delete(
-      `https://sparkel.onrender.com/data/${id}`
+      `https://sparkel2.onrender.com/data/${id}`
     );
     return response.data;
   } catch (error) {

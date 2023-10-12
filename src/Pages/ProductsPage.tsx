@@ -9,20 +9,25 @@ import Footer from "../Components/Footer";
 
 function ProductsPage() {
   const dispatch = useAppDispatch();
+
+  // Get product-related data from the Redux store
   const { isLoading, isError, products } = useAppSelector(
     (store) => store.ProductReducer
   );
 
+  // Pagination and filtering/sorting state
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(8); // Change this value as per your requirement
+  const [pageSize] = useState(8); // Adjust this value as needed
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
   const [category, setCategory] = useState<string[]>([]);
   const [gender, setGender] = useState<string[]>([]);
 
+  // Handle sorting change
   const handleSortChange = (value: "asc" | "desc") => {
     setSortOrder(value);
   };
 
+  // Handle category/gender filter change
   const handleFilterChange = (type: "category" | "gender", value: string[]) => {
     if (type === "category") {
       setCategory(value);
@@ -31,11 +36,12 @@ function ProductsPage() {
     }
   };
 
+  // Fetch products on component mount
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  // Apply filtering and sorting only on the products shown on the current page
+  // Apply filtering and sorting to the products
   const filteredAndSortedProducts = products
     .filter((product) => {
       if (category.length === 0 && gender.length === 0) {
@@ -55,26 +61,32 @@ function ProductsPage() {
       return 0;
     });
 
-  // Pagination Logic
+  // Calculate the total number of pages for pagination
   const totalPages = Math.ceil(filteredAndSortedProducts.length / pageSize);
+
+  // Get the products for the current page
   const paginatedProducts = filteredAndSortedProducts.slice(
     (page - 1) * pageSize,
     page * pageSize
   );
 
+  // Handle previous page
   const handlePrevPage = () => {
     if (page > 1) {
       setPage((prevPage) => prevPage - 1);
     }
   };
 
+  // Handle next page
   const handleNextPage = () => {
     if (page < totalPages) {
       setPage((prevPage) => prevPage + 1);
     }
   };
+
+  // Handle clearing the sort option
   const handleClearSort = () => {
-    setSortOrder(null); // Clear the sort option by setting it to null
+    setSortOrder(null);
   };
   return (
     <div>
