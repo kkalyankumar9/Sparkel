@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 
 // import { ProductDatatype } from "../Redux/Products/ProductType";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Spacer } from "@chakra-ui/react";
+import { Spacer} from "@chakra-ui/react";
 import axios from "axios";
 import { MdGppGood } from "react-icons/md";
-
-
+import { AuthContext } from "../context/Authcontext";
+import { useToast } from '@chakra-ui/react'
 const CardContainer = styled.div`
   padding: 10px;
   margin: 10px auto;
@@ -166,13 +166,21 @@ const ProductCardItems: React.FC<ProductDatatype> = ({
   gender,
 }) => {
   const [isInCart, setIsInCart] = useState(false);
-
+  const toast = useToast()
+  const { isAuthenticated } = useContext(AuthContext);
   const handleAddToCart = () => {
     const cartItems: ProductDatatype[] = JSON.parse(localStorage.getItem('cart') || '[]');
     const isProductInCart = cartItems.some((item) => item.id === id);
-
+    
     if (isProductInCart) {
-      alert('Product is already in the cart. Not adding a duplicate.');
+     // alert('Product is already in the cart. Not adding a duplicate.');
+      toast({
+        title: 'Product is already in the cart.',
+        //description: "Continue to Login..",
+        status: 'success',
+        duration: 2000,
+        isClosable: false,
+      })
       return;
     }
 
@@ -195,7 +203,14 @@ const ProductCardItems: React.FC<ProductDatatype> = ({
       .post('https://sparkel2.onrender.com/cart', productData)
       .then((response) => {
         console.log('Product added to cart:', response.data);
-        alert('Product added to cart');
+        //alert('Product added to cart');
+        toast({
+          title: 'Product added to cart',
+          //description: "Continue to Login..",
+          status: 'success',
+          duration: 1000,
+          isClosable: true,
+        })
         setIsInCart(true);
         cartItems.push(productData);
         localStorage.setItem('cart', JSON.stringify(cartItems));
@@ -249,9 +264,12 @@ const ProductCardItems: React.FC<ProductDatatype> = ({
         <Button>View Details</Button>
       </Link> */}
       <Spacer />
-      <Button onClick={handleAddToCart} disabled={isInCart}>
+      {isAuthenticated && <Button onClick={handleAddToCart} disabled={isInCart}  >
         {isInCart ? 'Added to Cart' : 'Add to Cart'}
       </Button>
+
+      }
+      
     </CardContainer>
   );
 };

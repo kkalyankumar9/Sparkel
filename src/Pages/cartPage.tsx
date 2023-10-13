@@ -1,4 +1,4 @@
-import { Box, Button,  Flex,  Heading, Link, Stack, StackDivider, Table, TableContainer, Tbody, Th, Thead, Tr } from "@chakra-ui/react"
+import { Box, Button,  Flex,  Heading, Link, Stack, StackDivider, Table, TableContainer, Tbody, Th, Thead, Tr, useToast } from "@chakra-ui/react"
 import axios from "axios"
 
 
@@ -21,6 +21,7 @@ interface CartItem {
   }
 
 const CartPage=()=>{
+  const toast=useToast()
     const [cartData,setcartData]=useState<CartItem[]>([])
     const [subtotal,setSubtotal]=useState<number>(0)
    const  [quantity,setQuantity]=useState<number[]>([])
@@ -102,16 +103,18 @@ const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 
 };
 const handleDelete = (id: number) => {
-  // Find the index of the item to be deleted
-  //const itemIndex = cartData.findIndex((item) => item.id === id);
-
   
-
-  // Send a request to your server to update the cart data
   axios.delete(`https://sparkel2.onrender.com/cart/${id}`)
     .then((response) => {
       console.log("Item deleted successfully");
-      alert("deleted")
+      //alert("deleted")
+      toast({
+        title: 'product Deleted',
+        //description: "Continue to Login..",
+        status: 'success',
+        duration: 1000,
+        isClosable: true,
+      })
       cartdata()
       
     })
@@ -124,17 +127,19 @@ const handleDelete = (id: number) => {
     <Box p={"2%"} >
         <Heading>Your Shoping Cart</Heading>
         <Flex flexDirection={{ base: "column", md: "row" }}>
-                    <Box   w={{ base: "100%", md: "70%" }} >
+                    <Box   w={{ base: "100%", md: "70%"}} >
                     <TableContainer >
                         {cartData.length===0?"EMPTY":""}
-                <Table variant='simple' >
+                <Table variant='simple'  >
                     <Thead  gap={"0px"}>
                     <Tr>
-                    <Th ></Th>
+                  
+                    <Th >Image</Th>
                     <Th >brand</Th>
                     <Th >prcie</Th>
                     <Th>Quantity</Th>
                     <Th>Total</Th>
+                    <Th>Delete</Th>
                 </Tr>
                     </Thead>
 
@@ -145,7 +150,9 @@ const handleDelete = (id: number) => {
                 (
             
                 <Tr key={e.id}>
+                 
                     <Td>
+                  
 
                  
                    <Image src={e.image} alt="" width="80px" />
@@ -235,8 +242,8 @@ const handleDelete = (id: number) => {
                             </Box>
                         </Box>
                         </Stack>
-                        <Button onClick={handleClick} bg={"black"} color={"white"}>
-                    Buy this Product                   
+                        <Button onClick={handleClick} bg={"#FA6F13"} color={"white"}>
+                    Order Now               
                       </Button>
                     </CardBody>
                     </Card>

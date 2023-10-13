@@ -16,7 +16,7 @@ import { auth } from '../firebaseauth';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-
+import { useToast } from '@chakra-ui/react'
 
 interface RegisterForm {
   email: string;
@@ -24,6 +24,7 @@ interface RegisterForm {
 }
 
 const SignUp = () => {
+  const toast = useToast()
   const navigate=useNavigate()
   const { isAuthenticated } = useContext(AuthContext);
   const [registerForm, setRegisterForm] = useState<RegisterForm>({
@@ -43,6 +44,13 @@ const SignUp = () => {
     .then((res)=>{
       console.log(res)
       navigate("/login")
+      toast({
+        title: 'SignUp Successfully',
+        description: "Continue to Login..",
+        status: 'success',
+        duration: 1000,
+        isClosable: true,
+      })
     })
     .catch((error)=>{
       console.log(error)
@@ -67,55 +75,75 @@ const handleGoogleSignIn = async () => {
 };
 
   return (
-    <Box maxWidth="sm" mx="auto" p={4}  borderColor="gray.200" boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px" marginTop={"5%"} >
-      <Heading mb={4} color={"#010008"}>Register</Heading>
-      <form onSubmit={handleSubmit} >
-        <Stack spacing={3}>
-          <FormControl id="email" isRequired>
-            <FormLabel>Email ID</FormLabel>
-            <Input
-              type="text"
-              name="email"
-              placeholder='Email Id'
-              value={registerForm.email}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-          <FormControl id="password" isRequired>
-            <FormLabel>Password</FormLabel>
-            <Stack spacing={3}>
-            <Input
-              type="password"
-              name="password"
-              value={registerForm.password}
-              onChange={handleInputChange}
-              variant='outline' placeholder='password'
-             h={"40px"}
-            />
+<Box  bgGradient="linear(to-r, gray.300, yellow.400, pink.200)" width={"100%"} p={"4%"}>
+      <Box
+        maxWidth="sm"
+        mx="auto"
+        p={4}
+        borderColor="gray.200"
+        boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px"
+        backgroundColor="white"
+        borderRadius={"10px"}
+       
 
-            </Stack>
-            
-          </FormControl>
 
-          <Box >
-          <Button type="submit" colorScheme="143dc4"  bg="#143dc4" color={"white"} width={"240px"} justifyContent={"center"}>
-          SignUp
-          </Button>
+      >
+        <Heading mb={4} color="#010008">
+          Register
+        </Heading>
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={3}>
+            <FormControl id="email" isRequired>
+              <FormLabel>Email ID</FormLabel>
+              <Input
+                type="text"
+                name="email"
+                placeholder="Email Id"
+                value={registerForm.email}
+                onChange={handleInputChange}
+              />
+            </FormControl>
+            <FormControl id="password" isRequired>
+              <FormLabel>Password</FormLabel>
+              <Stack spacing={3}>
+                <Input
+                  type="password"
+                  name="password"
+                  value={registerForm.password}
+                  onChange={handleInputChange}
+                  variant="outline"
+                  placeholder="Password"
+                  h="40px"
+                />
+              </Stack>
+            </FormControl>
+            <Box>
+              <Button
+                type="submit"
+                colorScheme="blue"
+                bg="#143dc4"
+                color="white"
+                width="240px"
+                justifyContent="center"
+              >
+                Sign Up
+              </Button>
+            </Box>
+            <Box justifyItems="center" marginLeft="162px">
+              <FormLabel>Or</FormLabel>
+            </Box>
+            <Box paddingLeft="55px" mt={2}>
+              <GoogleButton onClick={handleGoogleSignIn} />
+            </Box>
+          </Stack>
+          <Box w="100px" mt={2}>
+            <button onClick={handleGoBack} >
+              <ArrowBackIcon marginRight="10px" />
+              Back
+            </button>
           </Box>
-          <Box justifyItems={"center"} marginLeft={"162px"}>
-          <FormLabel>Or</FormLabel>
-          </Box>
-          <Box paddingLeft={"55px"} mt={4}>
-          <GoogleButton onClick ={handleGoogleSignIn} />
-          </Box>
-          
-        </Stack>
-        <Box w="100px">
-        <button onClick={handleGoBack}> <br/> <ArrowBackIcon marginRight={"10px"}/>Back</button>
-        </Box>
-      </form>
-      
-      
+        </form>
+      </Box>
     </Box>
   );
 };

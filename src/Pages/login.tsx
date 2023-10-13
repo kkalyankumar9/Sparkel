@@ -7,7 +7,7 @@ import { error } from 'console';
 import { Box, Heading, Input, Button, FormLabel,Text, HStack } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-
+import { useToast } from '@chakra-ui/react'
 
 interface LoginForm {
   email: string;
@@ -15,6 +15,7 @@ interface LoginForm {
 }
 
 const Login = () => {
+  const toast = useToast()
   const navigate=useNavigate()
   const { setIsAuthenticated } = useContext(AuthContext);
   const [loginForm, setLoginForm] = useState<LoginForm>({
@@ -35,6 +36,13 @@ const Login = () => {
       console.log(res)
       navigate("/")
       setIsAuthenticated(true)
+      toast({
+        title: 'Login Successfully',
+        description: "Welcom to Sparkel..",
+        status: 'success',
+        duration: 1000,
+        isClosable: true,
+      })
     })
     .catch((error)=>{
       console.log(error)
@@ -45,8 +53,10 @@ const Login = () => {
     navigate(-1)
   }
   return (
-    <Box padding={"5%"}>
-    <Box p={4} maxWidth="400px" mx="auto" borderColor="gray" boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px"  >
+    <Box padding={"5%"}  w='100%'
+
+    bgGradient='linear(to-r, gray.300, yellow.400, pink.200)'>
+    <Box p={4} maxWidth="400px" mx="auto" borderColor="gray"bg={"white"} boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px" borderRadius={"10px"} >
     <Heading as="h1" mb={4} color={"#010008"}>Login</Heading>
     <form onSubmit={handleSubmit}>
     <FormLabel>Email ID</FormLabel>
