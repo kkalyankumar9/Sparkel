@@ -37,8 +37,8 @@ const CheckoutPage = () => {
     <Flex
       flexDirection={{ base: "column", md: "row" }}
       justify="center"
-      align="center"
-      py={8}
+      //align="center"
+     py={6}
     >
       <Box
         w={{ base: "100%", md: "70%" }}

@@ -6,6 +6,7 @@ import ProductCardItems from "./ProductCardItems";
 import { styled } from "styled-components";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import { Box, Spinner } from "@chakra-ui/react";
 
 function ProductsPage() {
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ function ProductsPage() {
 
   // Pagination and filtering/sorting state
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(8); // Adjust this value as needed
+  const [pageSize] = useState(12); // Adjust this value as needed
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
   const [category, setCategory] = useState<string[]>([]);
   const [gender, setGender] = useState<string[]>([]);
@@ -94,13 +95,23 @@ function ProductsPage() {
     
     <div>
       {isLoading ? (
-        <h2>Loading..</h2>
+       <Box p={"10%"}>
+        <Spinner
+      
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl" 
+      />
+      </Box>
+      
       ) : isError ? (
         <h2>Error..</h2>
       ) : (
         <>
         <Div4>
-          <Div2>
+          <Div2 >
           <div style={{textAlign:"left"}}>
             <label style={{marginBottom:"10px",fontSize:"large"}} >
              <h4 > Sort By Price:</h4>

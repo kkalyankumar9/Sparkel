@@ -66,19 +66,39 @@ function PaymentPage() {
     navigate(-1)
   }
   const [value, setValue] = React.useState('1')
-  const handleOrder =async () => {
-    try {
-      await axios.delete("https://sparkel2.onrender.com"); // Replace with your actual URL
+  // const [cart, setCart] = useState([]);
+  const handleOrder = async () => {
+    // try {
+     
+    
+    //   const orderResponse = await axios.post("https://your-api-url/place-order", {
+    //     cart: cart, // Send your cart data to the server
+    //   });
   
-      console.log("All data deleted successfully.");
+    //   if (orderResponse.status === 200) {
+    //     toast({
+    //       title: "Order Placed Successfully",
+    //       description: "Thank you for your order!",
+    //       status: "success",
+    //       duration: 3000,
+    //       isClosable: true,
+    //     });
   
-      // For example: setcartData([]) or dispatch an action to clear it
-  
-    } catch (error) {
-      console.error("Error deleting all data:", error);
-      // Handle the error, show an error message, or take other actions
-    }
+    //     // You may also want to clear the cart after a successful order.
+    //     // clearCart();
+    //   }
+    // } catch (error) {
+    //   console.error("Error placing the order:", error);
+    //   toast({
+    //     title: "Error Placing Order",
+    //     description: "An error occurred while placing your order.",
+    //     status: "error",
+    //     duration: 3000,
+    //     isClosable: true,
+    //   });
+    // }
   };
+  
   return (
     <ChakraProvider theme={theme}>
       <Box>
@@ -88,7 +108,7 @@ function PaymentPage() {
         <Box>
           <RadioGroup onChange={setValue} value={value}>
       <Stack direction='row'>
-        <Radio value='1'>Cash on Delivery</Radio>
+        {/* <Radio value='1'>Cash on Delivery</Radio> */}
         <Radio value='2'>Card</Radio>
         
       </Stack>

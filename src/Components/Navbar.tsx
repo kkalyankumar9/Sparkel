@@ -45,6 +45,7 @@ const Navbar = () => {
     boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
     position={"sticky"}
     zIndex={"0px"}
+    bgColor={"white"}
       style={{
         padding: "10px 0px 10px 0px",
         zIndex: "100",
@@ -54,8 +55,8 @@ const Navbar = () => {
         alignItems: "center",
         textDecoration: "none",
         top: "0",
-        height: "100px",
-      }}>
+        height: "70px",
+      }} borderRadius={"0px"}>
       <Box
         width="60px"
         display={{ sm: "block", md: "none", xl: "none", base: "block" }}>
@@ -86,7 +87,7 @@ const Navbar = () => {
             </MenuItem>
             { !isAuthenticated?   <MenuItem as="a" href="/login">
               Login
-            </MenuItem> :<Button onClick={handleLogout} disabled={!isAuthenticated}  bg={"white"} w={"100%"}>
+            </MenuItem> :<Button onClick={handleLogout} disabled={!isAuthenticated}  bg={"white"} mt={"3px"} w={"100%"}>
       Logout
     </Button>}
           </MenuList>
@@ -97,7 +98,7 @@ const Navbar = () => {
           <Image
             bgColor="white"
             src="https://i.ibb.co/6ZTK02S/Final-logo.png "
-            width="90px"></Image>
+            width="50px"></Image>
         </Link>
       </Box>
       <Box
