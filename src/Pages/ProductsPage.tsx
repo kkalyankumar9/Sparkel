@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from "react";
+import {
+  useColorMode,
+  Box,
+  Spinner,
+  Heading,
+  Stack,
+  Flex,
+  Checkbox,
+  Radio,
+  Button,
+  ButtonGroup,
+  IconButton,
 
+} from "@chakra-ui/react";
 import { getProducts } from "../Redux/Products/action";
 import { useAppDispatch, useAppSelector } from "../Redux/store";
 import ProductCardItems from "./ProductCardItems";
-import { styled } from "styled-components";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
-import { Box, Spinner } from "@chakra-ui/react";
 
 function ProductsPage() {
+  const { colorMode } = useColorMode();
   const dispatch = useAppDispatch();
 
   // Get product-related data from the Redux store
@@ -18,7 +30,7 @@ function ProductsPage() {
 
   // Pagination and filtering/sorting state
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(12); // Adjust this value as needed
+  const [pageSize] = useState(8);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
   const [category, setCategory] = useState<string[]>([]);
   const [gender, setGender] = useState<string[]>([]);
@@ -46,7 +58,7 @@ function ProductsPage() {
   const filteredAndSortedProducts = products
     .filter((product) => {
       if (category.length === 0 && gender.length === 0) {
-        return true; // No filters applied, so include all products
+        return true;
       }
       return (
         (category.length === 0 || category.includes(product.category)) &&
@@ -89,320 +101,169 @@ function ProductsPage() {
   const handleClearSort = () => {
     setSortOrder(null);
   };
+
   return (
-    <div>
-      <Navbar/>
-    
-    <div>
-      {isLoading ? (
-       <Box p={"10%"}>
-        <Spinner
-      
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="blue.500"
-        size="xl" 
-      />
+    <Box>
+      <Navbar />
+
+      <Box>
+        {isLoading ? (
+          <Box p={["10%", "20%"]}>
+            <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+          </Box>
+        ) : isError ? (
+          <Heading as="h2">Error..</Heading>
+        ) : (
+          <Stack direction={["row", "row", "row"]}>
+            <Box >
+              <Stack spacing={4} p={"40px"}>
+                <Stack align="start">
+                  <Heading size={"md"}>Filter By Category:</Heading>
+                  <Checkbox
+                    value="top_ware"
+                    isChecked={category.includes("top_ware")}
+                    onChange={(e) => {
+                      handleFilterChange(
+                        "category",
+                        e.target.checked
+                          ? [...category, e.target.value]
+                          : category.filter((val) => val !== e.target.value)
+                      );
+                    }}
+                  >
+                    Top ware
+                  </Checkbox>
+                  <Checkbox
+                    value="bottom_ware"
+                    isChecked={category.includes("bottom_ware")}
+                    onChange={(e) => {
+                      handleFilterChange(
+                        "category",
+                        e.target.checked
+                          ? [...category, e.target.value]
+                          : category.filter((val) => val !== e.target.value)
+                      );
+                    }}
+                  >
+                    Bottom ware
+                  </Checkbox>
+                  <Checkbox
+                    value="shoes"
+                    isChecked={category.includes("shoes")}
+                    onChange={(e) => {
+                      handleFilterChange(
+                        "category",
+                        e.target.checked
+                          ? [...category, e.target.value]
+                          : category.filter((val) => val !== e.target.value)
+                      );
+                    }}
+                  >
+                    Shoes
+                  </Checkbox>
+                </Stack>
+                <Stack align="start">
+                  <Heading size={"md"}>Filter By Gender:</Heading>
+                  <Checkbox
+                    value="male"
+                    isChecked={gender.includes("male")}
+                    onChange={(e) => {
+                      handleFilterChange(
+                        "gender",
+                        e.target.checked
+                          ? [...gender, e.target.value]
+                          : gender.filter((val) => val !== e.target.value)
+                      );
+                    }}
+                  >
+                    Male
+                  </Checkbox>
+                  <Checkbox
+                    value="women"
+                    isChecked={gender.includes("women")}
+                    onChange={(e) => {
+                      handleFilterChange(
+                        "gender",
+                        e.target.checked
+                          ? [...gender, e.target.value]
+                          : gender.filter((val) => val !== e.target.value)
+                      );
+                    }}
+                  >
+                    Women
+                  </Checkbox>
+                  <Checkbox
+                    value="kids"
+                    isChecked={gender.includes("kids")}
+                    onChange={(e) => {
+                      handleFilterChange(
+                        "gender",
+                        e.target.checked
+                          ? [...gender, e.target.value]
+                          : gender.filter((val) => val !== e.target.value)
+                      );
+                    }}
+                  >
+                    Kids
+                  </Checkbox>
+                </Stack>
+                <Stack align="start">
+                  <Heading size={"md"}>Sort By Price:</Heading>
+                  <Radio
+                    value="asc"
+                    isChecked={sortOrder === "asc"}
+                    onChange={() => handleSortChange("asc")}
+                  >
+                    Ascending
+                  </Radio>
+                  <Radio
+                    value="desc"
+                    isChecked={sortOrder === "desc"}
+                    onChange={() => handleSortChange("desc")}
+                  >
+                    Descending
+                  </Radio>
+                  <Button onClick={handleClearSort}>Clear Sort</Button>
+                </Stack>
+              </Stack>
+            </Box>
+            <Box >
+              <Flex wrap="wrap">
+                {paginatedProducts.map((product: any) => (
+                  <ProductCardItems key={product.id} {...product} />
+                ))}
+              </Flex>
+            </Box>
+          </Stack>
+        )}
       </Box>
-      
-      ) : isError ? (
-        <h2>Error..</h2>
-      ) : (
-        <>
-        <Div4>
-          <Div2 >
-          <div style={{textAlign:"left"}}>
-            <label style={{marginBottom:"10px",fontSize:"large"}} >
-             <h4 > Sort By Price:</h4>
-            </label>
-            <div>
-              <input
-                type="radio"
-                value="asc"
-                checked={sortOrder === "asc"}
-                onChange={() => handleSortChange("asc")}
-              />
-              <span>Ascending</span>
-            </div>
-            <div>
-              <input
-                type="radio"
-                value="desc"
-                checked={sortOrder === "desc"}
-                onChange={() => handleSortChange("desc")}
-              />
-              <span>Descending</span>
-            </div>
-            <button onClick={handleClearSort}>Clear Sort</button>
-          </div>
-          <div style={{textAlign:"left"}}>
-            <label  style={{marginBottom:"10px",fontSize:"large"}}>
-             <h4> Filter By Category:</h4>
-              <div>
-                <input
-                  type="checkbox"
-                  value="top_ware"
-                  checked={category.includes("top_ware")}
-                  onChange={(e) => {
-                    handleFilterChange(
-                      "category",
-                      e.target.checked
-                        ? [...category, e.target.value]
-                        : category.filter((val) => val !== e.target.value)
-                    );
-                  }}
-                />
-                <span>Top ware</span>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  value="bottom_ware"
-                  checked={category.includes("bottom_ware")}
-                  onChange={(e) => {
-                    handleFilterChange(
-                      "category",
-                      e.target.checked
-                        ? [...category, e.target.value]
-                        : category.filter((val) => val !== e.target.value)
-                    );
-                  }}
-                />
-                <span>Bottom ware</span>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  value="shoes"
-                  checked={category.includes("shoes")}
-                  onChange={(e) => {
-                    handleFilterChange(
-                      "category",
-                      e.target.checked
-                        ? [...category, e.target.value]
-                        : category.filter((val) => val !== e.target.value)
-                    );
-                  }}
-                />
-                <span>Shoes</span>
-              </div>
-            </label>
-          </div>
-          <div style={{textAlign:"left"}}>
-            <label  style={{marginBottom:"10px",fontSize:"large"}}>
-             <h4> Filter By Gender:</h4>
-              <div >
-                <input
-                  type="checkbox"
-                  value="male"
-                  checked={gender.includes("male")}
-                  onChange={(e) => {
-                    handleFilterChange(
-                      "gender",
-                      e.target.checked
-                        ? [...gender, e.target.value]
-                        : gender.filter((val) => val !== e.target.value)
-                    );
-                  }}
-                />
-                <span>Male</span>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  value="women"
-                  checked={gender.includes("women")}
-                  onChange={(e) => {
-                    handleFilterChange(
-                      "gender",
-                      e.target.checked
-                        ? [...gender, e.target.value]
-                        : gender.filter((val) => val !== e.target.value)
-                    );
-                  }}
-                />
-                <span>Women</span>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  value="kids"
-                  checked={gender.includes("kids")}
-                  onChange={(e) => {
-                    handleFilterChange(
-                      "gender",
-                      e.target.checked
-                        ? [...gender, e.target.value]
-                        : gender.filter((val) => val !== e.target.value)
-                    );
-                  }}
-                />
-                <span>Kids</span>
-              </div>
-            </label>
-          </div>
-          </Div2>
-          <div>
-          <ProductList>
-            {paginatedProducts.map((product: any) => (
-              <ProductCardItems key={product.id} {...product} />
-            ))}
-          </ProductList>
-          </div>
-          {/* Pagination buttons */}
-          </Div4>
-        
-          <PaginationContainer  >
-            <button
-              onClick={handlePrevPage}
-              disabled={page === 1}
-              style={{ marginRight: "10px" }}
-            >
-              Previous Page
-            </button>
-            <span>
-              Page {page} of {totalPages}
-            </span>
-            <button
-              onClick={handleNextPage}
-              disabled={page === totalPages}
-              style={{ marginLeft: "10px" }}
-            >
-              Next Page
-            </button>
-          </PaginationContainer>
-     
-        
-        </>
-      )}
-    </div>
-    <br />
-    <Footer/>
-    </div>
+      <ButtonGroup justifyContent="center" marginTop="4" p={"20px"}>
+        <Button
+          colorScheme="teal"
+        //  icon="chevron-left"
+          onClick={handlePrevPage}
+          disabled={page === 1}
+          aria-label="Previous Page"
+        >
+          Previous Page
+        </Button>
+        <span>
+          Page {page} of {totalPages}
+        </span>
+        <Button
+          colorScheme="teal"
+        //icon="chevron-right"
+          onClick={handleNextPage}
+          disabled={page === totalPages}
+          aria-label="Next Page"
+        >
+          Next Page
+        </Button>
+      </ButtonGroup>
+      <br />
+      <Footer />
+    </Box>
   );
 }
 
 export default ProductsPage;
-
-const PaginationContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-  font-size: 16px;
-  color: #666;
-  text-align: center;
-  justify-content: center;
-
-  button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    cursor: pointer;
-
-    &:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-  }
-`;
-const Div4 = styled.div`
-display: flex;
-justify-content: space-between;
-padding: 2%;
-Div4>div>div{
-  align-items: center;
-  
-}
-
-`;
-
-const Div2 = styled.div`
-width: 25%;
-padding: 10px;
-
-
-`;
-
-// const ProductList = styled.div`
-// width: 80%;
-// display: flex;
-// flex-wrap: wrap;
-// justify-content: space-between;
-// `;
-
-
-
-
-
-
-const ProductList=styled.div`
-  display: grid;
-  grid-template-columns: repeat(5,1fr);
-  width: 60%;
-  gap: 3px;
-  padding: 3px;
- 
-  @media (max-width: 766px) {
-    grid-template-columns: repeat(1,1fr);
-  }
-  @media (max-width: 767px) {
-    grid-template-columns: repeat(2,1fr);
-  }
-  @media (min-width: 768px) and (max-width: 991px) {
-    grid-template-columns: repeat(3,1fr);
-  }
-
-  @media (min-width: 992px) and (max-width: 1199px) {
-    /* Styles for laptop devices */
-    grid-template-columns: repeat(4,1fr);
-  }
-
-
-`
-// const Div1 = styled.div`
-//   padding: 10px;
-//   margin: 10px auto;
-//   border: 1px solid #ccc;
-//   border-radius: 8px;
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//   background-color: #fff;
-//   width: 240px;
-//   position: relative;
-//   overflow: hidden;
-
-//   img {
-//     width: 100%;
-//     height: auto;
-//     border-radius: 8px;
-//     transition: transform 0.3s ease;
-//   }
-
-//   p {
-//     font-size: 14px;
-//     margin: 8px 0;
-//   }
-
-//   button {
-//     background-color: #f5c904;
-//     color: #fff;
-//     border: none;
-//     padding: 8px 16px;
-//     border-radius: 4px;
-//     cursor: pointer;
-//     transition: background-color 0.2s ease;
-
-//     &:hover {
-//       background-color:#007bff ;
-//     }
-//   }
-
-//   &:hover img {
-//     transform: translateY(-10px);
-//   }
-// `;

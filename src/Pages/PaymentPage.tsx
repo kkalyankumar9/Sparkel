@@ -67,36 +67,24 @@ function PaymentPage() {
   }
   const [value, setValue] = React.useState('1')
   // const [cart, setCart] = useState([]);
+
   const handleOrder = async () => {
-    // try {
-     
-    
-    //   const orderResponse = await axios.post("https://your-api-url/place-order", {
-    //     cart: cart, // Send your cart data to the server
-    //   });
-  
-    //   if (orderResponse.status === 200) {
-    //     toast({
-    //       title: "Order Placed Successfully",
-    //       description: "Thank you for your order!",
-    //       status: "success",
-    //       duration: 3000,
-    //       isClosable: true,
-    //     });
-  
-    //     // You may also want to clear the cart after a successful order.
-    //     // clearCart();
-    //   }
-    // } catch (error) {
-    //   console.error("Error placing the order:", error);
-    //   toast({
-    //     title: "Error Placing Order",
-    //     description: "An error occurred while placing your order.",
-    //     status: "error",
-    //     duration: 3000,
-    //     isClosable: true,
-    //   });
-    // }
+    const url = 'https://sparkel2.onrender.com/cart';
+    axios
+    .delete(url)
+    .then((response) => {
+      console.log('Data cleared successfully:', response.data);
+      // Handle success as needed
+      navigate("/")
+    })
+    .catch((error) => {
+      console.error('Error clearing data:', error);
+      // Handle errors as needed
+    });
+
+
+
+ 
   };
   
   return (
