@@ -9,8 +9,9 @@ import { useNavigate } from 'react-router-dom';
 
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DeleteIcon } from "@chakra-ui/icons";
+import { AuthContext } from "../context/Authcontext";
 interface CartItem {
     id: number;
     image:string;
@@ -27,7 +28,7 @@ const CartPage=()=>{
    const  [quantity,setQuantity]=useState<number[]>([])
    //const [isloading,setIsloading ]=useState<boolean>(false)
 
-
+   const {cart } = useContext(AuthContext);
     //const [total, setTotal] = useState(0);
 
    async function cartdata(){
@@ -92,7 +93,9 @@ const CartPage=()=>{
       };
     
       const discount = calculateDiscount();
-      const deliveryCharge = 50;
+      const deliveryCharge=subtotal>0?50:0;
+    
+    
       const totalAmount = Math.floor( subtotal - discount + deliveryCharge);
 
 const Navigate=useNavigate()
@@ -109,7 +112,7 @@ const handleDelete = (id: number) => {
       console.log("Item deleted successfully");
       //alert("deleted")
       toast({
-        title: 'product Deleted',
+        title: 'Removed from cart',
         //description: "Continue to Login..",
         status: 'success',
         duration: 1000,

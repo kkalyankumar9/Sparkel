@@ -167,7 +167,8 @@ const ProductCardItems: React.FC<ProductDatatype> = ({
 }) => {
   const [isInCart, setIsInCart] = useState(false);
   const toast = useToast()
-  const { isAuthenticated } = useContext(AuthContext);
+  
+  const { isAuthenticated ,cart} = useContext(AuthContext);
   const handleAddToCart = () => {
     const cartItems: ProductDatatype[] = JSON.parse(localStorage.getItem('cart') || '[]');
     const isProductInCart = cartItems.some((item) => item.id === id);
@@ -213,7 +214,7 @@ const ProductCardItems: React.FC<ProductDatatype> = ({
         })
         setIsInCart(true);
         cartItems.push(productData);
-        localStorage.setItem('cart', JSON.stringify(cartItems));
+        localStorage.setItem('cart', JSON.stringify(cart));
       })
       .catch((error) => {
         console.error('Error adding product to cart:', error);
