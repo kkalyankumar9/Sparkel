@@ -114,7 +114,7 @@ function ProductsPage() {
         ) : isError ? (
           <Heading as="h2">Error..</Heading>
         ) : (
-          <Stack direction={["row", "row", "row"]}>
+          <Stack direction={["column", "row", "row"]}>
             <Box >
               <Stack spacing={4} p={"40px"}>
                 <Stack align="start">
