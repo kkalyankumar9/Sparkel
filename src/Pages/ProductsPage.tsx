@@ -228,7 +228,7 @@ function ProductsPage() {
               </Stack>
             </Box>
             <Box >
-              <Flex wrap="wrap">
+              <Flex >
                 {paginatedProducts.map((product: any) => (
                   <ProductCardItems key={product.id} {...product} />
                 ))}
