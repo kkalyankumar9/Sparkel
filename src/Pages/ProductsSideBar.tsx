@@ -40,14 +40,14 @@ export const ProductsSideBar: React.FC = () => {
   };
 
   useEffect(() => {
-    let params: any= {
+    let params: any = {
       category,
       type,
     };
     if (order) {
       params.order = order;
     }
-   setSearchParams(params);
+    setSearchParams(params);
   }, [category, type, order]);
 
   const handleSort = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +60,6 @@ export const ProductsSideBar: React.FC = () => {
       <h3>Gender</h3>
       <div>
         <input
-        
           type="checkbox"
           value={"male"}
           onChange={handleFilter}
@@ -70,7 +69,6 @@ export const ProductsSideBar: React.FC = () => {
         <br />
         <br />
         <input
-      
           type="checkbox"
           value={"female"}
           onChange={handleFilter}
@@ -80,7 +78,6 @@ export const ProductsSideBar: React.FC = () => {
         <br />
         <br />
         <input
-         
           type="checkbox"
           value={"kids"}
           onChange={handleFilter}
@@ -104,7 +101,6 @@ export const ProductsSideBar: React.FC = () => {
       <h3>Type</h3>
       <div>
         <input
-    
           type="checkbox"
           value={""}
           onChange={handleType}
@@ -114,7 +110,6 @@ export const ProductsSideBar: React.FC = () => {
         <br />
         <br />
         <input
-      
           type="checkbox"
           value={"non-veg"}
           onChange={handleType}
@@ -128,7 +123,6 @@ export const ProductsSideBar: React.FC = () => {
       <h3>Sort By Price</h3>
       <div>
         <input
-      
           type="radio"
           name="sort"
           value={"asc"}
@@ -138,13 +132,7 @@ export const ProductsSideBar: React.FC = () => {
         <label>Ascending</label>
         <br />
         <br />
-        <input
-      
-          type="radio"
-          name="sort"
-          value={"desc"}
-          onChange={handleSort}
-        />
+        <input type="radio" name="sort" value={"desc"} onChange={handleSort} />
         <label>Descending</label>
       </div>
     </DIV>
@@ -157,6 +145,8 @@ const DIV = styled.div`
   text-align: left;
   margin-left: 20px;
   box-shadow: 2px 2px 2px gray;
+  position: static;
+  z-index: 0;
 
   label {
     margin-left: 5px;

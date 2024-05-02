@@ -11,7 +11,7 @@ import {
   Button,
   ButtonGroup,
   IconButton,
-
+  Grid,
 } from "@chakra-ui/react";
 import { getProducts } from "../Redux/Products/action";
 import { useAppDispatch, useAppSelector } from "../Redux/store";
@@ -30,7 +30,7 @@ function ProductsPage() {
 
   // Pagination and filtering/sorting state
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(8);
+  const [pageSize] = useState(10);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
   const [category, setCategory] = useState<string[]>([]);
   const [gender, setGender] = useState<string[]>([]);
@@ -109,13 +109,19 @@ function ProductsPage() {
       <Box>
         {isLoading ? (
           <Box p={["10%", "20%"]}>
-            <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
           </Box>
         ) : isError ? (
           <Heading as="h2">Error..</Heading>
         ) : (
           <Stack direction={["row", "row", "row"]}>
-            <Box >
+            <Box>
               <Stack spacing={4} p={"40px"}>
                 <Stack align="start">
                   <Heading size={"md"}>Filter By Category:</Heading>
@@ -227,12 +233,12 @@ function ProductsPage() {
                 </Stack>
               </Stack>
             </Box>
-            <Box >
-              <Flex >
+            <Box>
+              <Grid templateColumns="repeat(5, 1fr)" gap={6}>
                 {paginatedProducts.map((product: any) => (
                   <ProductCardItems key={product.id} {...product} />
                 ))}
-              </Flex>
+              </Grid>
             </Box>
           </Stack>
         )}
@@ -240,7 +246,7 @@ function ProductsPage() {
       <ButtonGroup justifyContent="center" marginTop="4" p={"20px"}>
         <Button
           colorScheme="teal"
-        //  icon="chevron-left"
+          //  icon="chevron-left"
           onClick={handlePrevPage}
           disabled={page === 1}
           aria-label="Previous Page"
@@ -252,7 +258,7 @@ function ProductsPage() {
         </span>
         <Button
           colorScheme="teal"
-        //icon="chevron-right"
+          //icon="chevron-right"
           onClick={handleNextPage}
           disabled={page === totalPages}
           aria-label="Next Page"
