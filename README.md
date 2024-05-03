@@ -4,7 +4,7 @@
 -![image](https://github.com/kkalyankumar9/loud-weight-1875/assets/112814583/cc0a8796-ba69-40d0-8eeb-b245dd61e749)
 
 # Vercel Deployed link
-https://loud-weight-1875-two.vercel.app
+https://sparkel-cu3q-dherrv336-kalyankumars-projects.vercel.app/
 
 # Tech Stack
 HTML | CSS | JavaScript |  React.js  | TypeScript | Chakra UI | Styled-Component | Firebase 
