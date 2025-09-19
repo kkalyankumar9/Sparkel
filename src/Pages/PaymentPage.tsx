@@ -28,6 +28,7 @@ function PaymentPage() {
   const [cardNumber, setCardNumber] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
+  const [value, setValue] = React.useState('1')
   const toast = useToast()
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCardNumber(e.target.value);
@@ -65,27 +66,51 @@ function PaymentPage() {
   const handleGoBack=()=>{
     navigate(-1)
   }
-  const [value, setValue] = React.useState('1')
+
   // const [cart, setCart] = useState([]);
 
-  const handleOrder = async () => {
-    const url = 'https://sparkel2.onrender.com/cart';
-    axios
-    .delete(url)
-    .then((response) => {
-      console.log('Data cleared successfully:', response.data);
-      // Handle success as needed
-      navigate("/")
-    })
-    .catch((error) => {
-      console.error('Error clearing data:', error);
-      // Handle errors as needed
+
+
+const handleOrder = async () => {
+
+
+  try {
+    // Fetch current cart items
+    const { data } = await axios.get("https://sparkel2.onrender.com/cart");
+
+    // Delete each item
+    const deletePromises = data.map((item: any) =>
+      axios.delete(`https://sparkel2.onrender.com/cart/${item.id}`)
+    );
+
+    await Promise.all(deletePromises); // Wait for all deletions
+
+    // Show success toast
+    toast({
+      title: "Order placed successfully",
+      description: "Your cart has been cleared.",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
     });
 
+    navigate("/"); // Redirect after deletion
+  } catch (error) {
+    // Show error toast
+    toast({
+      title: "Error clearing cart",
+      description: "Something went wrong. Please try again.",
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    });
+    console.error("Error clearing cart:", error);
+  }
+};
 
 
- 
-  };
   
   return (
     <ChakraProvider theme={theme}>

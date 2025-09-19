@@ -75,7 +75,7 @@ const handleGoogleSignIn = async () => {
 };
 
   return (
-<Box  bgGradient="linear(to-r, gray.300, yellow.400, pink.200)" width={"100%"} p={"4%"}>
+<Box  bgGradient="linear(to-r, gray.300, yellow.400, pink.200)" width={"100%"} height="100vh" p={"4%"}>
       <Box
         maxWidth="sm"
         mx="auto"

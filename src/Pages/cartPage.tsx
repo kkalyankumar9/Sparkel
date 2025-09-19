@@ -1,265 +1,165 @@
-import { Box, Button,  Flex,  Heading, Link, Stack, StackDivider, Table, TableContainer, Tbody, Th, Thead, Tr, useToast } from "@chakra-ui/react"
-import axios from "axios"
-
-
-import { Card, CardHeader, CardBody, CardFooter, Text,Td,Image} from '@chakra-ui/react'
-
-import { useNavigate } from 'react-router-dom';
-
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Stack,
+  StackDivider,
+  Table,
+  TableContainer,
+  Tbody,
+  Th,
+  Thead,
+  Tr,
+  Td,
+  Text,
+  Image,
+  useToast,
+} from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
-import { useContext, useEffect, useState } from "react";
-import { DeleteIcon } from "@chakra-ui/icons";
-import { AuthContext } from "../context/Authcontext";
-interface CartItem {
-    id: number;
-    image:string;
-    brand:string;
-    price:number;
-    //total:number;
-    
-  }
+import { useAppDispatch, useAppSelector } from "../Redux/store";
+import { decrementQty, deleteItem, fetchCart, incrementQty } from "../Redux/Cart/action";
 
-const CartPage=()=>{
-  const toast=useToast()
-    const [cartData,setcartData]=useState<CartItem[]>([])
-    const [subtotal,setSubtotal]=useState<number>(0)
-   const  [quantity,setQuantity]=useState<number[]>([])
-   //const [isloading,setIsloading ]=useState<boolean>(false)
 
-   const {cart } = useContext(AuthContext);
-    //const [total, setTotal] = useState(0);
 
-   async function cartdata(){
-    try {
-        await axios.get("https://sparkel2.onrender.com/cart")
-        .then(res=>{
-            setcartData(res.data)
-            setQuantity(Array(res.data.length).fill(1));
-          
+const CartPage = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
 
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
-    } catch (error) {
-        console.log(error)
-    }
+  const dispatch = useAppDispatch();
 
-    }
-  
-    useEffect(()=>{
-        cartdata()
-    },[])
-    useEffect(() => {
-        let newSubtotal = 0;
-        for (let i = 0; i < cartData.length; i++) {
-            if (cartData[i]?.price) {
-                newSubtotal += +cartData[i].price * quantity[i];
-              }
-        }
-        setSubtotal(newSubtotal);
-      }, [cartData, quantity]);
-    
-      const handleIncrement = (index: number) => {
-        const newQuantity = [...quantity];
-        newQuantity[index] += 1;
-        setQuantity(newQuantity);
-      };
-    
-      const handleDecrement = (index: number) => {
-        if (quantity[index] > 1) {
-          const newQuantity = [...quantity];
-          newQuantity[index] -= 1;
-          setQuantity(newQuantity);
-        }
-      };
-     
+  // ✅ get cart state from Redux
+  const { items: cartData, loading, error } = useAppSelector(
+    (state) => state.cartReducer
+  );
 
-   
-      
-      
-      const calculateDiscount = () => {
-        if (subtotal >= 1000 && subtotal < 2000) {
-          return Math.floor(subtotal * 0.2);
-        } else if (subtotal >= 2000 && subtotal < 4000) {
-          return Math.floor(subtotal * 0.3);
-        } else if (subtotal >= 4000) {
-          return Math.floor(subtotal * 0.4);
-        } else {
-          return Math.floor(subtotal * 0.6);
-        }
-      };
-    
-      const discount = calculateDiscount();
-      const deliveryCharge=subtotal>0?50:0;
-    
-    
-      const totalAmount = Math.floor( subtotal - discount + deliveryCharge);
+  // ✅ Fetch cart on load
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
 
-const Navigate=useNavigate()
+  // ✅ Subtotal calculation
+  const subtotal = cartData.reduce(
+    (acc, item) => acc + item.price * (item.quantity || 1),
+    0
+  );
 
-const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-  e.preventDefault();
-  Navigate(`/Checkout`)
+  // ✅ Discount logic
+  const calculateDiscount = () => {
+    if (subtotal >= 1000 && subtotal < 2000) return Math.floor(subtotal * 0.2);
+    if (subtotal >= 2000 && subtotal < 4000) return Math.floor(subtotal * 0.3);
+    if (subtotal >= 4000) return Math.floor(subtotal * 0.4);
+    return Math.floor(subtotal * 0.6);
+  };
 
-};
-const handleDelete = (id: number) => {
-  
-  axios.delete(`https://sparkel2.onrender.com/cart/${id}`)
-    .then((response) => {
-      console.log("Item deleted successfully");
-      //alert("deleted")
-      toast({
-        title: 'Removed from cart',
-        //description: "Continue to Login..",
-        status: 'success',
-        duration: 1000,
-        isClosable: true,
-      })
-      cartdata()
-      
-    })
-    .catch((error) => {
-      console.error("Error deleting item: ", error);
+  const discount = calculateDiscount();
+  const deliveryCharge = subtotal > 0 ? 50 : 0;
+  const totalAmount = Math.floor(subtotal - discount + deliveryCharge);
+
+  // ✅ Handle delete
+  const handleDelete = (id: number) => {
+    dispatch(deleteItem(id));
+    toast({
+      title: "Removed from cart",
+      status: "success",
+      duration: 1000,
+      isClosable: true,
     });
-};
-    return <>
-   <Navbar/>
-    <Box p={"2%"} >
-        <Heading>Your Shoping Cart</Heading>
+  };
+
+  return (
+    <>
+      <Navbar />
+      <Box p="2%">
+        <Heading>Your Shopping Cart</Heading>
         <Flex flexDirection={{ base: "column", md: "row" }}>
-                    <Box   w={{ base: "100%", md: "70%"}} >
-                    <TableContainer >
-                        {cartData.length===0?"EMPTY":""}
-                <Table variant='simple'  >
-                    <Thead  gap={"0px"}>
-                    <Tr>
-                  
-                    <Th >Image</Th>
-                    <Th >brand</Th>
-                    <Th >prcie</Th>
+          <Box w={{ base: "100%", md: "70%" }}>
+            <TableContainer>
+              {cartData.length === 0 ? "EMPTY" : ""}
+              <Table variant="simple">
+                <Thead>
+                  <Tr>
+                    <Th>Image</Th>
+                    <Th>Brand</Th>
+                    <Th>Price</Th>
                     <Th>Quantity</Th>
                     <Th>Total</Th>
                     <Th>Delete</Th>
-                </Tr>
-                    </Thead>
-
+                  </Tr>
+                </Thead>
                 <Tbody>
-                    
-                {
-                cartData?.map((e,i)=>
-                (
-            
-                <Tr key={e.id}>
-                 
-                    <Td>
-                  
+                  {cartData.map((item) => (
+                    <Tr key={item.id}>
+                      <Td>
+                        <Image src={item.image} alt="" width="80px" />
+                      </Td>
+                      <Td>{item.brand}</Td>
+                      <Td>₹ {item.price}</Td>
+                      <Td>
+                        <Button onClick={() => dispatch(decrementQty(item.id))}>
+                          -
+                        </Button>
+                        {item.quantity}
+                        <Button onClick={() => dispatch(incrementQty(item.id))}>
+                          +
+                        </Button>
+                      </Td>
+                      <Td>₹ {item.price * item.quantity}</Td>
+                      <Td>
+                        <Button onClick={() => handleDelete(item.id)}>
+                          <DeleteIcon />
+                        </Button>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </Box>
 
-                 
-                   <Image src={e.image} alt="" width="80px" />
-                   </Td>
-                    <Td>{e.brand}</Td>
-                    <Td>{e.price}</Td>
-
-                    <Td>
-                    <Button onClick={() => handleDecrement(i)}>-</Button>
-                {quantity[i]}
-                <Button onClick={() => handleIncrement(i)}>+</Button>
-                </Td>
-                <Td>
-                    {
-                        String(e.price*quantity[i])
-                    }
-                </Td>
-                <Td><Button onClick={()=>handleDelete(e.id)}><DeleteIcon/></Button></Td>
-                
-                    
-                    
-                </Tr>
-                ))
-                }
-                
-    </Tbody>
-
-                </Table>
-                </TableContainer>
-
-           
-                    </Box>
-                <Box  w={{ base: "100%", md: "25%" }}>
-                                    <Card>
-                    <CardHeader>
-                        <Heading size='md'>    Order Summary</Heading>
-                    </CardHeader>
-
-                    <CardBody>
-                        <Stack divider={<StackDivider />} spacing='4'>
-                        <Box display={"flex"} justifyContent={"space-between"}  >
-                            <Box>
-                            <Heading size='xs' textTransform='uppercase'>
-                            Sub Total
-                            </Heading>
-                            </Box> 
-                            <Box>
-                            <Text pt='2' fontSize='sm'>
-                            ₹ {subtotal}
-                            </Text>
-                            </Box> 
-                        </Box>
-                        <Box display={"flex"} justifyContent={"space-between"}>
-                            <Box>
-                            <Heading size='xs' textTransform='uppercase'>
-                           Discount
-                            </Heading>
-                            </Box>
-                            <Box>
-                            <Text pt='2' fontSize='sm'>
-                            ₹ {discount}
-                            </Text>
-                            </Box>
-                        </Box>
-                        <Box display={"flex"} justifyContent={"space-between"} >
-                        <Box>
-                            <Heading size='xs' textTransform='uppercase'>
-                            Delivery Fee
-                            </Heading>
-                            </Box>
-                            <Box>
-                            <Text pt='2' fontSize='sm'>
-                            ₹ {deliveryCharge}
-                            </Text>
-                            </Box>
-                        </Box>
-                        <Box display={"flex"} justifyContent={"space-between"} >
-                        <Box>
-                            <Heading size='xs' textTransform='uppercase'>
-                           Total
-                            </Heading>
-                            </Box>
-                            <Box>
-                            <Text pt='2' fontSize='sm'>
-                            ₹ {totalAmount}
-                            </Text>
-                            </Box>
-                        </Box>
-                        </Stack>
-                        <Button onClick={handleClick} bg={"#FA6F13"} color={"white"}>
-                    Order Now               
-                      </Button>
-                    </CardBody>
-                    </Card>
-
-                </Box>
+          {/* ✅ Order Summary */}
+          <Box w={{ base: "100%", md: "25%" }}>
+            <Box border="1px solid gray" p={4} borderRadius="md">
+              <Heading size="md">Order Summary</Heading>
+              <Stack divider={<StackDivider />} spacing="4" mt={4}>
+                <Flex justifyContent="space-between">
+                  <Text>Subtotal</Text>
+                  <Text>₹ {subtotal}</Text>
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <Text>Discount</Text>
+                  <Text>₹ {discount}</Text>
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <Text>Delivery Fee</Text>
+                  <Text>₹ {deliveryCharge}</Text>
+                </Flex>
+                <Flex justifyContent="space-between" fontWeight="bold">
+                  <Text>Total</Text>
+                  <Text>₹ {totalAmount}</Text>
+                </Flex>
+              </Stack>
+              <Button
+                onClick={() => navigate("/Checkout")}
+                bg="#FA6F13"
+                color="white"
+                mt={4}
+                w="100%"
+              >
+                Order Now
+              </Button>
+            </Box>
+          </Box>
         </Flex>
-        <Text border={"2px solid black"} w={"100px"} textAlign={"center"} borderRadius={"5px"} margin={"auto"}>
-       
-        Cart Updata
-        </Text>
-       
-    </Box>
-    <Footer/>
+      </Box>
+      <Footer />
     </>
-}
-export default CartPage
+  );
+};
+
+export default CartPage;

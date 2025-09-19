@@ -11,7 +11,9 @@ import {
   Text,
   Flex,
   Center,
-  Button
+  Button,
+  InputGroup,
+  InputRightElement
 } from "@chakra-ui/react";
 import { VscAccount } from "react-icons/vsc";
 import { GrCart } from "react-icons/gr";
@@ -127,36 +129,35 @@ const Navbar = () => {
           New Arrivals
         </Link>
       </Box>
-      <Box
-        display={{ sm: "none", md: "none", xl: "flex", base: "none" }}
-        justifyContent="space-between"
-        width={[
-          "60%", // 0-30em
-          "45%", // 30em-48em
-          "30%", // 48em-62em
-          "26%", // 62em+
-          "19%",
-          "25%",
-        ]}>
-        <Input
-          paddingLeft="15px"
-          borderRadius="7px"
-          position="relative"
-          variant="flushed"
-          placeholder="search"
-          borderBottom="1px"
-          borderColor="gray"
-        />
-        {/* <GrSearch /> */}
-        <SearchIcon
-          w="18px"
-          h="18px"
-          position="absolute"
-          right={["400px", "350px", "250px", "295px"]}
-          top="45px"
-          color="gray"
-        />
-      </Box>
+
+
+<Box
+  display={{ sm: "none", md: "none", xl: "flex", base: "none" }}
+  justifyContent="space-between"
+  width={[
+    "60%", // 0-30em
+    "45%", // 30em-48em
+    "30%", // 48em-62em
+    "26%", // 62em+
+    "19%",
+    "25%",
+  ]}
+>
+  <InputGroup>
+    <Input
+      paddingLeft="15px"
+      borderRadius="7px"
+      variant="flushed"
+      placeholder="search"
+      borderBottom="1px"
+      borderColor="gray"
+    />
+    <InputRightElement>
+      <SearchIcon color="gray" />
+    </InputRightElement>
+  </InputGroup>
+</Box>
+
       <Flex
         fontFamily="Poppins,sans-serif"
         display={{ sm: "none", md: "flex", xl: "flex", base: "none" }}

@@ -53,7 +53,7 @@ const Login = () => {
     navigate(-1)
   }
   return (
-    <Box padding={"5%"}  w='100%'
+    <Box padding={"5%"}  w='100%'height="100vh"
 
     bgGradient='linear(to-r, gray.300, yellow.400, pink.200)'>
     <Box p={4} maxWidth="400px" mx="auto" borderColor="gray"bg={"white"} boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px" borderRadius={"10px"} >
